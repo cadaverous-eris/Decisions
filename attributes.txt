@@ -1,0 +1,9 @@
+gender
+weight
+beauty
+charisma
+endurance
+luck
+perception
+wisdom
+willpower
