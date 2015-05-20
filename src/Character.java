@@ -2,17 +2,6 @@ import java.util.Random;
 
 public class Character{
     String name;
-    int weight;
-    int beauty;
-    int charisma;
-    int endurance;
-    int luck;
-    int perception;
-    int wisdom;
-    int willpower;
-
-
-
 
     public Character(){
         Random i = new Random();
