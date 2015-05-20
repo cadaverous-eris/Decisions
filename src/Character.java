@@ -11,6 +11,7 @@ public class Character{
     int wisdom;
     int willpower;
 
+
     public int getGender() {
         return gender;
     }
@@ -65,9 +66,10 @@ public class Character{
     public void setWillpower(int willpower) {
         this.willpower = willpower;
     }
+
     public Character(){
         Random i = new Random();
-        gender      = i.nextInt();
+        gender      = i.nextInt(); //make even chance 0-1
         weight      = i.nextInt() * 200 + (gender - 1) * 80 + 100; //Set weight using gender, male max 200, female 220 min is 100lbs, will be altered
         beauty      = i.nextInt() * 10;
         charisma    = i.nextInt() * 5 + beauty / 2;
