@@ -12,7 +12,6 @@ public class Life{
         Scanner console = new Scanner(System.in);
         Scanner file;
         File choices;
-
         try {
             choices = new File("choices.txt");
             file = new Scanner(choices);
@@ -32,12 +31,38 @@ public class Life{
                 		break;
                 	}
                 }
+
                 decide((String[]) options.toArray());
             }
 
         }
 
     }
+
+    public String eventParser(String event, ArrayList<String> options){
+        if (event.charAt(0)=='('){
+            if (event.toLowerCase().charAt(1)=='f') {//set importance
+                int i = 0;
+                int f = Integer.parseInt(event.substring(event.indexOf(' '), event.indexOf(')')));
+                while(options.get(i).charAt(0) == '>') i++;
+                options.add(i, ">" + options.remove(f));
+            }
+            if (event.toLowerCase().charAt(1)=='r') {
+                String r = options.get(new Random().nextInt(options.size()));
+                options.clear();
+                options.add(r);
+            }
+            if (event.toLowerCase().charAt(1)=='c') {
+                
+            }
+            return event.substring(event.indexOf('('),event.indexOf(')'));
+        }
+        if (event.charAt(0)=='"'){
+            out(event = event.substring(1,event.indexOf('"', 1)));
+            return event;
+        }
+    }
+    public String optionParser(){}
 
     private void out(String out){
         System.out.print(out);

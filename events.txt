@@ -14,11 +14,11 @@ born
 death
 
 {born}”You are born, it is a rather unremarkable affair, and you, are a rather unremarkable baby.
-childhood”
+childhood
 
 {childhood}(continue)”As you grow up, your life remains relatively dull. Everyday you wake up and eat:”
-oatmeal:
-eggs and bacon:[weight+5],[endurance+10]
-cereal:[weight+20]
-pancakes:[weight+50]
+“oatmeal”:
+“eggs and bacon”:[weight+5],[endurance+10]
+“cereal”:[weight+20]
+“pancakes”:[weight+50]
 (continue)
