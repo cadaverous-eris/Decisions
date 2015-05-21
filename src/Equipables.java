@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +7,6 @@ import java.util.Scanner;
 /**
  * Created by BLUE on 20.05.15.
  */
-<<<<<<< HEAD:src/Equipables.java
 public class Equipables {
     public class Equipable{
         private String modifiers;
@@ -22,27 +22,26 @@ public class Equipables {
             return modifiers;
         }
         public void setModifiers(String modifiers) {
-            this.modifiers = modifiers;
-        }
+                this.modifiers = modifiers;
+            }
         public String getName() {
-            return name;
-        }
+                return name;
+            }
         public void setName(String name) {
-            this.name = name;
-        }
+                this.name = name;
+            }
         public int getQuantity() {
-            return quantity;
-        }
+                return quantity;
+            }
         public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
+                this.quantity = quantity;
+            }
     }
     List<Equipable> equipables;
     public Equipables(){
         equipables = new ArrayList<Equipable>();
         Scanner file;
         File attributes;
-
         try {
             attributes = new File("attributes.txt");
             file = new Scanner(attributes);
@@ -55,7 +54,6 @@ public class Equipables {
             this.equipables.add(new Equipable(l.substring(l.indexOf(":") + 1),l.substring(0, l.indexOf(":"))));
         }
     }
-=======
-public class Equipable {
->>>>>>> origin/master:src/Equipable.java
 }
+
+
