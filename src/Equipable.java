@@ -6,6 +6,7 @@ import java.util.Scanner;
 /**
  * Created by BLUE on 20.05.15.
  */
+<<<<<<< HEAD:src/Equipables.java
 public class Equipables {
     public class Equipable{
         private String modifiers;
@@ -54,4 +55,7 @@ public class Equipables {
             this.equipables.add(new Equipable(l.substring(l.indexOf(":") + 1),l.substring(0, l.indexOf(":"))));
         }
     }
+=======
+public class Equipable {
+>>>>>>> origin/master:src/Equipable.java
 }

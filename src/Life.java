@@ -24,8 +24,12 @@ public class Life{
             final String l = file.nextLine();
             if (l.contains("{" + id + "}")){
                 ArrayList<String> options = new ArrayList<String>();
-                l.substring(l.indexOf('}') + 1);
-                while(file.hasNextLine() && file.nextLine().charAt(0) != '{'){
+                l = l.substring(l.indexOf('}') + 1);
+                while(file.hasNextLine()){
+                	line = file.nextLine();
+                	if (line.charAt(0) == '{') {
+                		break;
+                	}
                     options.add(file.nextLine());
                 }
                 decide((String[]) options.toArray());
