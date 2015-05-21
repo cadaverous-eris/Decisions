@@ -1,24 +1,25 @@
 {} - event
 () - clausal
 [] - modifier
-(force int)(random)(continue)
+<force int><random>
 consumable
 equipable
 
-
-{birth}(force 0)
+{birth}<force 0>
 (luck 0 0)stillborn
 born
 
-{stillborn}”You are still born.”
+{stillborn}”You are stillborn.”
 death
 
-{born}”You are born, it is a rather unremarkable affair, and you, are a rather unremarkable baby.
+{born}”You are born, it is a rather unremarkable affair, and you, are a rather unremarkable baby.”
 childhood
 
-{childhood}(continue)”As you grow up, your life remains relatively dull. Everyday you wake up and eat:”
-“oatmeal”:
-“eggs and bacon”:[weight+5],[endurance+10]
-“cereal”:[weight+20]
-“pancakes”:[weight+50]
-(continue)
+{childhood}”As you grow up, your life remains relatively dull. Everyday you wake up and eat:”
+“oatmeal”
+“eggs and bacon”[weight+5][endurance+10]
+“cereal”[weight+20]
+“pancakes”[weight+50]
+{}”akjhflasdgfilagsdf”
+
+{childhood1}

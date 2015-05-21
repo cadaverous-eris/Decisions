@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * Created by BLUE on 20.05.15.
  */
-public class Equipables {
+public class Equippables {
     public class Equipable{
         private String modifiers;
         private String name;
@@ -37,8 +37,8 @@ public class Equipables {
                 this.quantity = quantity;
             }
     }
-    List<Equipable> equipables;
-    public Equipables(){
+    private List<Equipable> equipables;
+    public Equippables(){
         equipables = new ArrayList<Equipable>();
         Scanner file;
         File attributes;
