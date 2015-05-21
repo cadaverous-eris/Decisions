@@ -21,16 +21,16 @@ public class Life{
             return;
         }
         while (file.hasNextLine()) {
-            final String l = file.nextLine();
-            if (l.contains("{" + id + "}")){
+            String event = file.nextLine();
+            if (event.contains("{" + id + "}")){
                 ArrayList<String> options = new ArrayList<String>();
-                l = l.substring(l.indexOf('}') + 1);
+                event = event.substring(event.indexOf('}') + 1);
                 while(file.hasNextLine()){
-                	line = file.nextLine();
-                	if (line.charAt(0) == '{') {
+                	options.add(file.nextLine());
+                	if (options.get(options.size() - 1).charAt(0) == '{') {
+                        options.remove(options.size() - 1);
                 		break;
                 	}
-                    options.add(file.nextLine());
                 }
                 decide((String[]) options.toArray());
             }
