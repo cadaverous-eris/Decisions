@@ -1,4 +1,4 @@
-{} - event
+﻿{} - event
 () - clausal
 [] - modifier
 <force int><random>
@@ -6,20 +6,82 @@ consumable
 equipable
 
 {birth}<force 0>
-(luck 0 0)stillborn
-born
+	(luck 0 0)stillborn
+	born
 
 {stillborn}”You are stillborn.”
-death
+	death
 
 {born}”You are born, it is a rather unremarkable affair, and you, are a rather unremarkable baby.”
-childhood
+	childhood
 
 {childhood}”As you grow up, your life remains relatively dull. Everyday you wake up and eat:”
-“oatmeal”
-“eggs and bacon”[weight+5][endurance+10]
-“cereal”[weight+20]
-“pancakes”[weight+50]
-{}”akjhflasdgfilagsdf”
+	“oatmeal”
+	“eggs and bacon”[weight+5][endurance+10]
+	“cereal”[weight+20]
+	“pancakes”[weight+50]
+{}"Elementary and middle school pass without incident. They don't matter anyway."
+	highSchool
 
-{childhood1}
+{highSchool}"You go to your high school."
+	"Attend class and work hard"[intelligence+2]
+	"Attend class and do enough work to get by"[intelligence+1]
+	"Attend class and cause disruptions"[intelligence-1]
+	"Skip class"[intelligence-2]skipClass
+{}"The school day ends."
+	"Party."party
+	"Try to get drugs."buyDrugs
+	"Do homework."[intelligence+1]
+{}"You do that every day for the rest of the year"
+	summer
+
+{skipClass}"You are skipping class, and you:"
+	"hang out with friends."[charisma+1]summer
+	"try to buy drugs."buyDrugs
+	"party."[charisma+1]party
+	"rob a store."robbery
+
+{summer}"You made it through the school year; it's finally summer!"<force 0>
+	(grade 3 3)applyCollege
+	"Hang out with friends"[charisma+1]
+	"Study"[intelligence+1]
+	"Sports"[endurance+1]
+	"Videogames"[weight+1][perception+1]
+{}"summer draws to a close..."<force 0>
+	(intelligence 6 20)[grade+1]highSchool
+	"You didn't work hard enough, have to repeat last school year."highSchool
+
+{party}"You go to a party, unsure of what to expect."<random>
+	"You dance the night away."[endurance+1]
+	"You talk to friends."[charisma+1]
+{}"Someone offers you a drink."
+	"Accept." give alcohol
+	"Decline."[charisma-1]
+{}"The party ends"
+	summer
+
+{buyDrugs}"You find a drug dealer"<random>
+	"You get some dank weed."[money-1] give weed
+	"You get caught by the police."jail
+{}""
+	summer
+
+{jail}"You are in jail."<random>
+	"You get out of prison."jobApply
+	"You rot in your cell for the rest of your days."death
+
+{robbery}"The robbery begins, hopefully nothing goes wrong..."<random>
+	"You get caught."jail
+	"You succeed"[money+3]highSchool
+
+{collegeApply}"Highschool draws to a close."<force 0><force 1><force 2>
+	(intelligence 20 30)"You get into an Ivy League College."goodCollege
+	(intelligence 12 20)"You get into a decent college."college
+	"You don't get into college."jobApply
+
+{jobApply}""<force 3><force 0><force 1><force 2>
+	(intelligence 15 20 || charisma 15 20 || luck 20 30 || beauty 30 40)"You get a high paying, yet monotonous job."goodJob
+	(intelligence 10 14 || charisma 10 14 || beauty 20 29)"You get an average desk job. It will be boring, but it will pay the bills."job
+	"You get a crap job doing peoples' dirty work and you'll get paid jack crap."crapJob
+	(endurance 20 30)"You get a job as an athlete"athlete
+	
