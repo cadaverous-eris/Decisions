@@ -5,5 +5,9 @@ charisma
 endurance
 luck
 perception
-wisdom
-willpower
+intelligence
+money
+grade
+relationship
+kids
+income
