@@ -97,8 +97,8 @@ equipable
 	"You don't get into college."adulthood
 
 {jobApply}"You need to make money somehow..."
-	(intelligence 15 20 || charisma 15 20 || luck 20 30 || beauty 30 40)"You get a high paying, yet monotonous job."[income-income][income+10]
-	(intelligence 10 14 || charisma 10 14 || beauty 20 29)"You get an average desk job. It will be boring, but it will pay the bills."[income-income][income+5]
+	(intelligence 15 20 || charisma 15 20 || luck 20 30 || beauty 30 40)"Get a high paying, yet monotonous job."[income-income][income+10]
+	(intelligence 10 14 || charisma 10 14 || beauty 20 29)"Get an average desk job. It will be boring, but it will pay the bills."[income-income][income+5]
 	"Get a crap job doing peoples' dirty work and you'll get paid jack crap."[income-income][income+1]
 	(endurance 20 30)"You get a job as an athlete"[income-income][income+15]
 	"Join the Army."army
