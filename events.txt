@@ -86,6 +86,7 @@ equipable
 {jail}"You are in jail."<random>
 	"You get out of prison after a few years."adulthood
 	"You rot in your cell for the rest of your days."death
+	"You always heard you'd be fine if you didn't drop the soap. That was a a lie. You have contracted HIV."hiv
 
 {robbery}"The robbery begins, hopefully nothing goes wrong..."<random>
 	"You get caught."jail
@@ -95,11 +96,12 @@ equipable
 	(intelligence 12 30)"You get into a decent college."college
 	"You don't get into college."adulthood
 
-{jobApply}""<force 3><force 0><force 1><force 2>
+{jobApply}"You need to make money somehow..."
 	(intelligence 15 20 || charisma 15 20 || luck 20 30 || beauty 30 40)"You get a high paying, yet monotonous job."[income-income][income+10]
 	(intelligence 10 14 || charisma 10 14 || beauty 20 29)"You get an average desk job. It will be boring, but it will pay the bills."[income-income][income+5]
-	"You get a crap job doing peoples' dirty work and you'll get paid jack crap."[income-income][income+1]
+	"Get a crap job doing peoples' dirty work and you'll get paid jack crap."[income-income][income+1]
 	(endurance 20 30)"You get a job as an athlete"[income-income][income+15]
+	"Join the Army."army
 {}""
 	adulthood
 	
@@ -180,6 +182,7 @@ equipable
 {bar}"You find a decent bar, and take a seat next to someone you are attracted to."<random>
 	"Compliment them."compliment
 	"Get scared and don't make a move."pussyOut
+	"Turns out that person was very not single. Their partner punches you, and before you know it, you're in a bar fight."barFight
 
 {loveFirstSight}"You approach the person."
 	"Compliment them."compliment
@@ -264,7 +267,7 @@ equipable
 	adulthood
 
 {cannibalism}"You heard human tastes like veal, but you disagree. It tastes like pure happiness."<random>
-	"The police knock on your door, search your house, and find the skeleton. Offering them the leftovers doesn't seem to help, and you are arrested."jail
+	"The police knock on your door, search your house, and find the scraps you haven't eaten. Offering them the leftovers doesn't seem to help, and you are arrested."jail
 	"Apparently your victim had HIV, because now you have it."hiv
 	getAway
 
@@ -385,3 +388,68 @@ equipable
 {robBank}"You've seen so many heist movies, so you are basically an expert at robbing places. Bank robbing will be a good way to start your life of crime."<random>
 	"The movies make it look so much easier! You got caught and arrested."jail
 	"Just like the movies. Cha-ching!"[money+15]adulthood
+
+{army}"You are a true patriot. Go out and kill some terrorists."
+	"Join the Air Force."airForce
+	"Join the Navy."navy
+	"Join the Marines."marines
+	"Desert."desert
+
+{desert}"You are a true coward. How will you live with yourself."<random>
+	"You won't actually have to live with yourself, as the army shoots deserters."death
+	"You can't actually live with yourself. Instead of killing terrorists, you kill yourself."death
+
+{marines}"You have joined the Marines. You are now on a mission to kill Osama Bin Laden's ghost. You even have Bill Murray to help."
+	"You are not Bill Murray. The angry spirit of Osama Bin Laden possesses your body, and sends your consciousness into the spirit world."death
+
+{navy}"You have joined the Navy! You are dissappointed to learn that they no longer wear those white uniforms with the funny hats."
+	"You are assigned to duty in a submarine, ready to launch nuclear missiles at Canada when they attack us."nukes
+
+{airForce}"You will be the best dog fighter since Snoopy, aside from your childhood pet, Gary, who never lost a fight."
+	"You fly your B-52 over Venezuela, and consider dropping the bomb. Nobody will notice the loss of just one Latin American country."nukes
+
+{nukes}"You have the power to kill millions right at the tip of your fingers. Do you do it?"
+	"Of course! Hitler didn't become a dictator by sitting on his butt and letting people live."genocide
+	"Nahhhh. You serve your country, and go home."adulthood
+
+{genocide}"You have killed millions of people, you bastard."
+	"Try to escape getting captured."escape
+	"Revel in your glory."glory
+	"Rebuild the decimated nation and rule it as dictator."dictator
+
+{escape}"You try to escape the various governments that are now targetting you."<random>
+	"Thankfully, no one seems to know who did it."getAway
+	"You stood no chance. Everyone wants to kil you, so they compromise, and each one takes a piece of your body to serve justice to."death
+
+{glory}"You celebrate your glorious victory over the lesser people, and then return to your normal life."
+	adulthood
+
+{dictator}"You name your soon-to-be-empire after your mother, Gary."
+	"Finish your job and destroy the rest of the world."apocalypse
+	"Try to gain recognition as an independent nation from the UN."countryBirth
+
+{countryBirth}"The UN doesn't seem very happy about your hostile takeover, and sends troops to 'take care of' you."
+	"The soldiers burst through the windows of your mansion as you take a bath, and shoot you in the face. A movie is made about, but it is ultimately a flop at the Box Office."death
+
+{apocalypse}"Some men just want to watch the world burn. But thats's not enough for you. You launch the missiles left from the country you destroyed, forgetting that retaliation is a thing."
+	"You are nuked by 23 countries simultaneously."death
+
+{barFight}"You have managed to get into a bar fight."
+	"Break a bottle, and slash at your opponent's eyes."attack
+	"Tear your opponent's heart out."templeOfDoom
+	"Try to defend yourself without harming your attacker."defend
+
+{defend}"You try to defend yourself as peacefully as possible."<random>
+	"You succeed, and your opponent eventually collapses and passes out."adulthood
+	"Your attacker shows no mercy, and literally turns you inside out, and leaves your remains outside an orphanage."death
+
+{templeOfDoom}"That was awesome, just like Indiana Jones. You hold the heart in your hand, and wonder what to do next."
+	"Clean up the mess."disposeBody
+	E"at the heart. It probably has tons of fiber, or something."cannibalism
+
+{attack}"You attack you opponent."<random>
+	"An onlooker calls the cops, who arrest you."jail
+	"You attack a little too viciously, and accidentally shove a cyanide capsule down their throat."disposeBody
+	"You overestimated yourself. Your opponent tears your face off with their teeth, and leaves you to die."death
+
+
