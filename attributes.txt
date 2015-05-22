@@ -11,3 +11,4 @@ grade
 relationship
 kids
 income
+sexualorientation
