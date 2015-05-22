@@ -377,6 +377,7 @@ equipable
 	"Have sex with a stranger."sex
 	"Buy yourself something nice."[money-10]adulthood
 	"Rob a bank."robBank
+	"Spontaneous combustion."death
 
 {vacation}"You go to Florida. You've only heard good things about Florida."<random>
 	"Oh God, why did you think this was a good idea?! So many crying children on the plane, your ears start bleeding. You go to bathroom to escape it, but you end up bleeding out."death
