@@ -17,35 +17,34 @@ equipable
 
 {childhood}”As you grow up, your life remains relatively dull. Everyday you wake up and eat:”
 	“oatmeal”
-	“eggs and bacon”[weight+5][endurance+10]
+	“eggs and bacon”[weight+5][endurance+5]
 	“cereal”[weight+20]
 	“pancakes”[weight+50]
 {}"Elementary and middle school pass without incident. They don't matter anyway."
 	highSchool
 
 {highSchool}"You go to your high school."
-	"Attend class and work hard"[intelligence+2]
-	"Attend class and do enough work to get by"[intelligence+1]
-	"Attend class and cause disruptions"[intelligence-1]
+	"Attend class and work hard"[intelligence+2]highSchool2
+	"Attend class and do enough work to get by"[intelligence+1]highSchool2
+	"Attend class and cause disruptions"[intelligence-1]highSchool2
 	"Skip class"[intelligence-2]skipClass
-{}"The school day ends."
+
+{highSchool2}"The school day ends."
 	"Party."party
 	"Try to get drugs."buyDrugs
-	"Do homework."[intelligence+1]
-{}"You do that every day for the rest of the year"
-	summer
+	"Do homework."[intelligence+1]summer
 
 {skipClass}"You are skipping class, and you:"
-	"hang out with friends."[charisma+1]summer
+	"hang out with friends."[charisma+1]highSchool2
 	"try to buy drugs."buyDrugs
-	"party."[charisma+1]party
 	"rob a store."robbery
+	"play sports."[endurance+5]highSchool2
 
 {summer}"You made it through the school year; it's finally summer!"<force 0>
 	(grade 3 3)applyCollege
 	"Hang out with friends"[charisma+1]
 	"Study"[intelligence+1]
-	"Sports"[endurance+1]
+	"Sports"[endurance+5]
 	"Videogames"[weight+1][perception+1]
 {}"summer draws to a close..."<force 0>
 	(intelligence 6 20)[grade+1]highSchool
@@ -55,19 +54,37 @@ equipable
 	"You dance the night away."[endurance+1]
 	"You talk to friends."[charisma+1]
 {}"Someone offers you a drink."
-	"Accept." give alcohol
-	"Decline."[charisma-1]
-{}"The party ends"
+	"Accept." partyDrunk
+	"Decline."[charisma-1]party2
+
+{party2}"The party ends"
 	summer
+
+{partyDrunk}"You get drunk out of your mind."<random>
+	"You decide to drive home, but hit a moose and bleed out on the side of the road."death
+	"AWWWWW YISSSSS!" party2
 
 {buyDrugs}"You find a drug dealer"<random>
-	"You get some dank weed."[money-1] give weed
+	"You get some dank weed."[money-1] weedHighSchool
 	"You get caught by the police."jail
-{}""
-	summer
+	"As you enter the worse side of town to find a dealer, you get shot. The shooter leaves before you see them, and you are left alone."death
+
+{weedHighSchool}"You decide to smoke that kush."<random>
+	"You get high, and nothing much happens."summer
+	"You get high, and reflect deeply on your life."[intelligence+1]summer
+	"You get high, and love it. You want something better, so you try cocaine. One thing leads to another, and you become a crackwhore."crackwhore
+
+{crackwhore}"You've resorted to prostitution in order to get crack."
+	"Realize how pathetic your life is, and commit suicide."death
+	"Realize how pathetic your life is, and go to rehab."rehab
+	"Continue being a crackwhore."crackwhore
+
+{rehab}"You've finally done it. You're going to get clean."<random>
+	"Nope, you can't do it, you need more drugs!"crackwhore
+	"It wasn't easy, but you did it!"adulthood
 
 {jail}"You are in jail."<random>
-	"You get out of prison."jobApply
+	"You get out of prison after a few years."adulthood
 	"You rot in your cell for the rest of your days."death
 
 {robbery}"The robbery begins, hopefully nothing goes wrong..."<random>
@@ -75,13 +92,296 @@ equipable
 	"You succeed"[money+3]highSchool
 
 {collegeApply}"Highschool draws to a close."<force 0><force 1><force 2>
-	(intelligence 20 30)"You get into an Ivy League College."goodCollege
-	(intelligence 12 20)"You get into a decent college."college
-	"You don't get into college."jobApply
+	(intelligence 12 30)"You get into a decent college."college
+	"You don't get into college."adulthood
 
 {jobApply}""<force 3><force 0><force 1><force 2>
-	(intelligence 15 20 || charisma 15 20 || luck 20 30 || beauty 30 40)"You get a high paying, yet monotonous job."goodJob
-	(intelligence 10 14 || charisma 10 14 || beauty 20 29)"You get an average desk job. It will be boring, but it will pay the bills."job
-	"You get a crap job doing peoples' dirty work and you'll get paid jack crap."crapJob
-	(endurance 20 30)"You get a job as an athlete"athlete
+	(intelligence 15 20 || charisma 15 20 || luck 20 30 || beauty 30 40)"You get a high paying, yet monotonous job."[income-income][income+10]
+	(intelligence 10 14 || charisma 10 14 || beauty 20 29)"You get an average desk job. It will be boring, but it will pay the bills."[income-income][income+5]
+	"You get a crap job doing peoples' dirty work and you'll get paid jack crap."[income-income][income+1]
+	(endurance 20 30)"You get a job as an athlete"[income-income][income+15]
+{}""
+	adulthood
 	
+{college}"You are at college."
+	"Go to your classes."[intelligence+1]college2
+	"Skip class."skipCollege
+
+{college2}"You have some free time."
+	"Party!"collegeParty
+	"Study."[charisma-1][intelligence+1]college3
+	"Go to the gym."[endurance+1][weight-1]college3
+	"Try to buy drugs."buyDrugsCollege
+	"Play videogames."[weight+1][perception+1]college3
+	"Try to find a significant other."tryLoveCollege
+	(relationship 1 1)"Go out with your significant other."dateCollege
+
+{college3}""<force 1>
+	(intelligence 20 40)"You graduate college!"adulthood
+	"Continue learning so you can graduate."college1
+	"Screw the work, you drop out."adulthood
+
+{tryLoveCollege}""<random>
+	"You find a nice person decide to go on a date with them."[relationship+1]dateCollege
+	"You get laid."sexCollege
+	"You don't find anyone, and remain lonely."college3
+{sexCollege}"You are about to get it on!"
+	"Use condom."sexSafeCollege
+	"Forget about protection."sexUnsafeCollege
+{sexSafeCollege}""<random>
+	"The condom broke!"[perception-1]sexUnsafeCollege
+	"AWWW YISSS!"college3
+	
+{sexUnsafeCollege}""<random>
+	"You get HIV."hiv
+	"You and your partner get pregnant."pregnantCollege
+
+{hiv}"Your HIV eventually leads to AIDS, which kills you."
+	death
+
+{pregnantCollege}""<random>
+	"Miscarriage. The grief drives you away from your friends and loved ones, and you commit suicide." death
+	"You had a girl. Sorry."[kids+1]collegeKid
+	"You had a boy. Sorry."[kids+1]collegeKid
+
+{collegeKid}"Being a parent is expensive! You have to drop out of college and try to get a job."
+	adulthood
+
+{dateCollege}""<random>
+	"Your date goes well, you end up back at your place."sexCollege
+	"Your date stands you up."[relationship-1]college3
+	"Your date is average."college3
+
+{adulthood}"Adult life is boring."
+	[money-2*kids+relationship][money+income]
+{}"You have free time from your job."<force 0>
+	(money -100 0)"You are broke, and become homeless."homeless
+	"Look for a new job."applyJob
+	(relationship 0 0)"Look for a significant other."tryLove
+	(relationship 1 1)"Propose to your significant other."[money-3]propose
+	(relationship 1 1)"Go out with your significant other."[money-1]date
+	(relationship 2 2)"Date night with spouse."[money-1]dateSpouse
+	(relationship 1 1)"Break up with significant other."[relationship-1]breakup
+	(relationship 2 2)"Divorse your spouse."[relationship-2]divorse
+	"Go shopping."shop
+	"Try to get drugs."buyDrugsAdult
+	"Drink alcohol."alcohol
+	"Play video games."[weight+1][perception+1]adulthood
+	"Go to the gym."[endurance+1][weight-1]adulthood
+	"Hang out with friends."[charisma+1]friends
+	"Be 'spontaneous.'"spontaneous
+	"Your life is boring. End it all."death
+	
+{tryLove}""<force 1><random>
+	"You go to a bar to find someone to settledown with."bar
+	(perception 15 30)"You see the most beautiful person you've ever seen on the way to a singles gathering."loveFirstSight
+	"You are checking your various accounts for eHarmony and Christian Mingle as you walk to the store, and get so distracted that you fall into a manhole and die."death
+	
+{bar}"You find a decent bar, and take a seat next to someone you are attracted to."<random>
+	"Compliment them."compliment
+	"Get scared and don't make a move."pussyOut
+
+{loveFirstSight}"You approach the person."
+	"Compliment them."compliment
+	"Kidnap them."kidnap
+	"Get scared and run away."[charisma-1]pussyOut
+
+{compliment}"The person hears your compliment and responds:"<force 0><force 1><random>
+	(beauty 0 3)"'Oh. I didn't know rats could speak. Now leave my sight before I call the exterminator.'"rejection
+	(beauty 10 20)"'Why thank you, would you like to go back to my place?'"[relationship+1]sex
+	"'Thanks, what's your name?'"date
+	"'Bye babe!' They were on the phone and didn't hear you."adulthood
+
+{rejection}"You were rejected. Brutally."<random>
+	"You are so overcome with grief, you just can't take it anymore. Maybe a bath in sulfuric acid will help..."death
+	"You spend a couple hundred dollars on scented candles and a poorly written Winnie the Pooh fan fiction from your wierd neighbor, but end up getting over it."[money-5]adulthood
+	"You decide to stalk the person who done you wrong."stalker
+	"You drown your sorrows in a drink or five."alcohol
+
+{stalker}"You are nearly the creepiest person ever. You even got a trench coat. But what else could you wear to stalk your one true love?"<random>
+	"You end up getting caught, and the video of you getting arrested goes viral once people see that you were naked under the coat."jail
+	"You watch your true love all day, and even see them take a shower, but later feel so ashamed that you decide you need drugs to feel better."buyDrugsAdult
+	"You watch your true love for a few days, but get so depressed by it that you hang yourself from their chimney."death
+
+{date}"You have managed to get someone to go on a date with you. What could go wrong?"
+	"Take your date to the movies."movieDate
+	"Take your date ice skating."skateDate
+	"Take your date to a baseball game."sportDate
+	"Take your date to starbucks."coffeeDate
+	
+{movieDate}"The movie is fine, and it starts to get late..."<random>
+	"Your date tells you they just want to be friends."rejection
+	"Your date kisses you, and says goodbye."[relationship+1]adulthood
+	"You end up at your place."sex
+
+{skateDate}"You go to a frozen lake and start skating."<random>
+	"You are having fun, until the ice cracks, and you fall through, and sink to the depths of the lake, waiting for your date to save you."death
+	"You have fun, but your date doesn't. They leave in a hurry and don't respond to your texts."rejection
+	"You have fun, and decide to go out on another date."[relationship+1]adulthood
+
+{sportdate}"You get to the game and find seats."<random>
+	"Your date never shows up."rejection
+	"You are having fun, until a ball flies into your face, killing you, and giving the opposing team their winning run."death
+	"Your date shows up, wearing the hat and shirt of the opposing team. They see who you are rooting for, and tell you this isn't going to work."rejection
+
+{coffeeDate}"You and your date get some coffee from a local Starbucks."
+	"Talk about life."lifeTalk
+	"Talk about yourself."selfTalk
+	"Talk about how you feel about gypsies."gypsyTalk
+
+{lifeTalk}"You start the conversation by quoting your favorite philosopher, Friedrich Nietzsche."<random>
+	"Your date groans, and later tells you that they don't like you as a person."rejection
+	"You and your date get into a deep conversation, and later decide to continue the conversation next Friday."[relationship+1]adulthood
+
+{selfTalk}"You start from the beginning..."
+	"Your date smiles and listens politely, but never answers your calls or texts when you try to schedule another date."rejection
+
+{gypsyTalk}"'...and that's why the gypsies are the root of all of the world's problems.'"
+	"Your date gazes at you for a moment, and then responds: 'Oh my god. That's exactly what I always thought!' You agree to go out again soon."[relationship+1]adulthood
+
+{kidnap}"You're not sure why exactly you thought this would be a good idea, but you are now officially a kidnapper."
+	"Keep your victim in the basement."basementPrisoner
+	"Kill you victim and dispose of the body."disposeBody
+	"Turn yourself in."jail
+
+{basementPrisoner}"Well, you now have a person chained up in your basement. What do you do with them?"
+	"Sex."sexSlave
+	"Leave them alone, just drop some food and water down through the laundry shoot."getAway
+	"Apologise and let them go."forgiveMe
+
+{sexSlave}"You are literally the worst human being. Also, you got hiv."
+	hiv
+
+{forgiveMe}"You're not sure why you thought this would end well... They immediately go to the police, and you are arrested."
+	jail
+
+{disposeBody}"You need to get rid of the body somehow..."
+	"Feed the fishes."getAway
+	"Eat it."[weight+50]cannibalism
+	"Cut it into 200 pieces and throw them into a pit."getAway
+
+{getAway}"You get away with it, amazingly."
+	adulthood
+
+{cannibalism}"You heard human tastes like veal, but you disagree. It tastes like pure happiness."<random>
+	"The police knock on your door, search your house, and find the skeleton. Offering them the leftovers doesn't seem to help, and you are arrested."jail
+	"Apparently your victim had HIV, because now you have it."hiv
+	getAway
+
+{pussyOut}"You realize that you will never have the cajones to do anything worthwhile."<random>
+	"You decide that if you can't do anything worthwhile, there's no reason to be alive."death
+	"You turn to drugs to find happiness."buyDrugsAdult
+
+{buyDrugsAdult}"You journey to the shadier part of town and find a dealer."
+	"Buy weed."[money-1]weed
+	"Buy crack"[money-3]crack
+	"Ask about a job."applyDealer
+
+{applyDealer}"The dealer looks you up and down."<random>
+	"'Ha ha ha! You! Get out of here!'"adulthood
+	"'Yeah let me hook you up.' You end up becoming a drug dealer."[income-income][income+7]adulthood
+	"'Hey, you look like a cop!' He shoots you and runs off. You bleed out slowly in the dark alley."death
+
+{weed}"You smoke the pot and get high."<random>
+	"You decide to go for a walk, and end up getting caught by a police officer. You shouldn't have brought your bong out of the house." jail
+	"You decide to go for a drive. The weed has muddled your brain, so you drive off the side of the road on the mountainside and fall to your death."death
+	"AWWWWW YISSSS!"adulthood
+
+{crack}"You smoke crack out of a makeshift crackpipe."<random>
+	"You love the feeling the crack gives you, and before you know it, you are back for more. The addiction consumes you, and you lose your job, forcing you to become a crackwhore."[income-income][crackwhore]
+	"AWWW YISSSS!"adulthood
+
+{homeless}"You find a decent sized garbage bag to call home."<random>
+	"You become a crackwhore to get drugs so you can live with yourself."crackwhore
+	"Your bag wasn't warm enough. You freeze one night, and get eaten by rats, squirrels, cats, and children when you thaw."death
+
+{propose}"You get on one knee and pop the question."<random>
+	"They say yes, and you get married soon after."[relationship+1]sex
+	"They get a panicked look, and just walk away. You never see them again."[relationship-1]rejection
+
+{breakup}"Your relationship isn't working out."
+	"You try to let your soon-to-be-ex down gently, but they seem to take it pretty hard. Oh well, they're not your problem anymore."adulthood
+
+{divorse}"You caught your spouse cheating on you. With a gorilla. At the zoo, in public. Maybe things aren't working out..."<random>
+	"You get an average lawyer, and soon enough, things are over. FREEDOM!"adulthood
+	"You get so angry, that after your divorse, you strangle your ex with the entrails of the gorilla they slept with."disposeBody
+
+{sex}"You get naked, and are about to have sex."
+	"Use a condom."sexSafe
+	"You don't need a condom for protection, you are quite skilled at self defense."sexUnsafe
+
+{sexSafe}""<random>
+	"The condom breaks."sexUnsafe
+	"You finish, and get on your way."adulthood
+
+{sexUnsafe}"You have sex, but can't shake the feeling of emptyness it leaves you with."<random>
+	"Miraculously, there are no consequences to your actions, and you go home STD-less, and without any sign pregnancy."
+	"You contract HIV"hiv
+	"Surprise! You and your partner are having a baby!"pregnant
+
+{pregnant}"Will it be a boy or a girl?"<random>
+	"Miscarriage. You had been scared of being a parent, but this still crushes you. You get depressed, go to an aquarium, and jump into the shark tank."death
+	"It's a boy! Sorry."[kids+1]adulthood
+	"It's a girl! Sorry."[kids+1]adulthood
+
+{dateSpouse}"You and your spouse go to a fancy restaurant, and try to recapture the passion you felt before you got married."<random>
+	"You and your spouse give up on the past, and decide to have sex again, for the first time in months."sex
+	"Your spouse realizes they don't love you anymore, and ask for a divorse."[relationship-2]divorse2
+
+{divorce2}"You didn't see it coming, but here it is. No matter how much you plead, your spouse is adamant. You are getting divorsed."
+	"You get divorced, and get really depressed. You end up losing your job for crying too much on the job, but eventually you move on."[income-income]adulthood
+	
+{shop}"You go to the mall, and try to decide which store to go to."
+	"Hollister."buyClothes
+	"Adidas."buyShoes
+	"Food court."buyFood
+
+{buyClothes}"You find some nice clothes, pay, and go home."
+	[money-1][beauty+2]adulthood
+	
+{buyShoes}"You find some sexy shoes, pay, and go home."
+	[money-1][beauty+1]adulthood
+
+{buyFood}"You go to Chipotle."<random>
+	"You eat the delicious food, but later have a traumatizing experience on the toilet, and then spend a few hours cleaning the bathroom."[money-1][weight-1]adulthood
+	"You eat the delicious food. And then you eat more. And more. Finally you run out of money and have to go home."[money-money][weight+40]adulthood
+	(relationship 0 0)"You see a beautiful person at the Chipotle, and compliment them."compliment
+
+{alcohol}"You get drink some beer, gin, and scotch."<force 0><force 1>
+	(endurance 15 30 || weight 300 1000)"You get a bit tipsy, but it wears off quickly. You go home."adulthood
+	(endurance 10 14 || weight 250 299)"You get drunk."drunk
+	"You die of alcohol poisoning after passing out in a public restroom."death
+	
+{drunk}"You are too drunk to function as a human."<random>
+	"You decide to drive. You drive you car into quicksand, and slowly sink and suffocate by yourself in your tiny car."death
+	"You pass out, and wake up the next morning with no recollection of the previous night."adulthood
+
+{friends}"You and some friends meet up and decide what to do."
+	"Drink."alcohol
+	"Smoke weed."weed
+	"Video games."[weight+1][perception+1]adulthood
+	"Play a sport."[endurance+1][weight-1]adulthood
+	"Go shopping."shop
+	"Have an orgy."orgy
+
+{orgy}"How could an orgy NOT be a good idea?"<random>
+	"HIV. That's how."hiv
+	"AWWWW YISSSS!"adulthood
+
+{spontaneous}"Your life is boring. Being spontaneous will fix that, just like in the movies!"
+	"Have an orgy."orgy
+	"Go on a vacation."[money-10]vacation
+	"Have sex with a stranger."sex
+	"Buy yourself something nice."[money-10]adulthood
+	"Rob a bank."robBank
+
+{vacation}"You go to Florida. You've only heard good things about Florida."<random>
+	"Oh God, why did you think this was a good idea?! So many crying children on the plane, your ears start bleeding. You go to bathroom to escape it, but you end up bleeding out."death
+	"You fall in love with the state, and grow old and senile there. Everyone you knew dies, and finally you do too."death
+	"You go to the Everglades, and get eaten by a duck while trying to escape a crocodile."death
+	"A Florida man kills you."death
+	"You go to DisneyLand, where you accidentally pick a fight with Mickey Mouse, who proceeds to bite your head off."death
+
+{robBank}"You've seen so many heist movies, so you are basically an expert at robbing places. Bank robbing will be a good way to start your life of crime."<random>
+	"The movies make it look so much easier! You got caught and arrested."jail
+	"Just like the movies. Cha-ching!"[money+15]adulthood
