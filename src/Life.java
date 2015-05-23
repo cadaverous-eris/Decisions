@@ -17,9 +17,14 @@ public class Life{
     public static Event load(String id) {
         //if (id.equals("death")) { System.out.println("You die sad and alone."); return; }
         //Scanner console = new Scanner(System.in);
-        for (int i = 0; i < events.size(); i++)
-            if (events.get(i).getID().equals(id))
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i) != null && events.get(i).getID().equals(id)) {
+                System.out.println("ARCHIVED");
                 return events.get(i);
+
+            }
+        }
+
         return loadFromFile(id);
     }
 
@@ -41,6 +46,7 @@ public class Life{
             if (l.contains(id)) {
                 System.out.println("FOUND: " + id);
                 event = new Event(l);
+                events.add(event);
                 addOptions(file, event.getOptions());
                 break;
             }
