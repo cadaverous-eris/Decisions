@@ -5,11 +5,19 @@ import java.util.*;
  * Created by BLUE on 20.05.15.
  */
 public class Attributes {
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
     public class Attribute{
         private String name;
         private int value;
         public Attribute(String name){
-            this.name = name;
+            this.name = name.toLowerCase();
             value = 0;
         }
         public String getName() {
@@ -25,7 +33,7 @@ public class Attributes {
             this.value = value;
         }
     }
-    List<Attribute> attributes;
+    private List<Attribute> attributes;
     public Attributes(){
         attributes = new ArrayList<Attribute>();
         Scanner file;

@@ -1,11 +1,4 @@
-﻿{} - event
-() - clausal
-[] - modifier
-<force int><random>
-consumable
-equipable
-
-{birth}<force 0>
+﻿{birth}<force 0>
 	(luck 0 0)stillborn
 	born
 
@@ -452,5 +445,3 @@ equipable
 	"An onlooker calls the cops, who arrest you."jail
 	"You attack a little too viciously, and accidentally shove a cyanide capsule down their throat."disposeBody
 	"You overestimated yourself. Your opponent tears your face off with their teeth, and leaves you to die."death
-
-

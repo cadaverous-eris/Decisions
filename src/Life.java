@@ -5,41 +5,65 @@ import java.io.File;
 import java.util.*;
 
 public class Life{
-    List<Character> characters;
-    List<Event> events;
+    public static List<Character> characters;
+    public static List<Event> events;
+    public static int miscEvents;
     public Life(){
         characters = new ArrayList<Character>();
+        events = new ArrayList<Event>();
+        miscEvents = 0;
     }
 
-    public void loader(String id) {
+    public static Event load(String id) {
         //if (id.equals("death")) { System.out.println("You die sad and alone."); return; }
         //Scanner console = new Scanner(System.in);
+        for (int i = 0; i < events.size(); i++)
+            if (events.get(i).getID().equals(id))
+                return events.get(i);
+        return loadFromFile(id);
+    }
+
+    public static Event loadFromFile(String id){
         Scanner file;
         File choices;
+        Event event = null;
         try {
-            choices = new File("choices.txt");
+            choices = new File("events.txt");
             file = new Scanner(choices);
         } catch (Exception e) {
             System.out.println("No file found");
-            return;
+            return null;
         }
         while (file.hasNextLine()) {
-            String l =  file.nextLine();
-            if (l.charAt(0) != '{') break;
-            Event event = new Event(l);
-            event = event.substring(event.indexOf('}') + 1);
-            while(file.hasNextLine()){
-                event.getOptions().add(file.nextLine());
-                if (options.get(options.size() - 1).charAt(0) == '{') {
-                    options.remove(options.size() - 1);
-                    break;
-                }
+            String l = file.nextLine();
+            System.out.println("Line: " + l);
+            System.out.println("ID: " + id);
+            if (l.contains(id)) {
+                System.out.println("FOUND: " + id);
+                event = new Event(l);
+                addOptions(file, event.getOptions());
+                break;
             }
-            decide((String[]) options.toArray());
-            //}
-
         }
+        return event;
+    }
 
+    private static String addOptions(Scanner file, ArrayList<Option> options){
+        while(file.hasNextLine()){
+            String o = file.nextLine();
+            o = o.replaceAll("^\\s+|\\s+$", "");
+            System.out.println("Option: " + o);
+            if (o.contains("{}")) {
+                Event misc = new Event("{" + (miscEvents += 1) + "}" + o.substring(o.indexOf('}') + 1));
+                events.add(misc);
+                for (int i = 0; i < options.size(); i++) options.get(i).setPointer(misc);
+                addOptions(file, misc.getOptions());
+            } else if (o.contains("{"))
+                return o; //return line which is not an option
+            if (o.length() > 0)
+                options.add(new Option(o));
+        }
+        return null;
     }
 
     public String eventParser(String event, ArrayList<String> options){//make void
@@ -109,7 +133,7 @@ public class Life{
     }
 
     public void init(){
-        parser("birth");
+        load("{birth}");
     }
 /*
     private void birth(){
