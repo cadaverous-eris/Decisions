@@ -147,9 +147,7 @@
 	"Your date stands you up."[relationship-1]college3
 	"Your date is average."college3
 
-{adulthood}"Adult life is boring."
-	[money-2*kids+relationship][money+income]
-{}"You have free time from your job."<force 0>
+{adulthood}"Adult life is boring."[money-2*kids+relationship][money+income]"You have free time from your job."<force 0>
 	(money -100 0)"You are broke, and become homeless."homeless
 	"Look for a new job."applyJob
 	(relationship 0 0)"Look for a significant other."tryLove
@@ -165,10 +163,10 @@
 	"Go to the gym."[endurance+1][weight-1]adulthood
 	"Hang out with friends."[charisma+1]friends
 	"Be 'spontaneous.'"spontaneous
-	"Your life is boring. End it all."death
+	"Your life is too boring. End it all."death
 	
 {tryLove}""<force 1><random>
-	"You go to a bar to find someone to settledown with."bar
+	"You go to a bar to find someone to settle down with."bar
 	(perception 15 30)"You see the most beautiful person you've ever seen on the way to a singles gathering."loveFirstSight
 	"You are checking your various accounts for eHarmony and Christian Mingle as you walk to the store, and get so distracted that you fall into a manhole and die."death
 	
@@ -441,7 +439,7 @@
 	"Clean up the mess."disposeBody
 	E"at the heart. It probably has tons of fiber, or something."cannibalism
 
-{attack}"You attack you opponent."<random>
+{attack}"You attack your opponent."<random>
 	"An onlooker calls the cops, who arrest you."jail
 	"You attack a little too viciously, and accidentally shove a cyanide capsule down their throat."disposeBody
 	"You overestimated yourself. Your opponent tears your face off with their teeth, and leaves you to die."death

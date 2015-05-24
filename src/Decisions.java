@@ -7,7 +7,7 @@ public class Decisions {
 
     public static void main(String[] args){
         Life life = new Life();
-        life.init();
+        life.start();
     }
 
 

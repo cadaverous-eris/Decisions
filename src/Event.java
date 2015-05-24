@@ -10,7 +10,7 @@ public class Event {
      ----------------------*/
     ArrayList<Option> options;
     String id;
-    String executeable;
+    String executable;
     public String getID() {
         return id;
     }
@@ -23,11 +23,11 @@ public class Event {
     public void setOptions(ArrayList<Option> options) {
         this.options = options;
     }
-    public String getExecuteable() {
-        return executeable;
+    public String getExecutable() {
+        return executable;
     }
-    public void setExecuteable(String executeable) {
-        this.executeable = executeable;
+    public void setExecutable(String executeable) {
+        this.executable = executeable;
     }
 
     /*---------------------------
@@ -36,8 +36,7 @@ public class Event {
 
     public Event(String init) {
         id = init.substring(0, init.indexOf('}') + 1);
-        System.out.println("EVENT ID: " + id);
-        executeable = init.substring(init.indexOf('}') + 1);
+        executable = init.substring(init.indexOf('}') + 1);
         options = new ArrayList<Option>();
     }
 

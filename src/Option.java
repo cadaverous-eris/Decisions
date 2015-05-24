@@ -2,24 +2,30 @@
  * Created by BLUE on 22.05.15.
  */
 public class Option{
-    String executable;
+    Event event;
     Event pointer;
 
     public void setPointer(Event pointer) {
         this.pointer = pointer;
     }
 
+    public void setExecutable(String executable) {
+        this.event = new Event(executable);
+    }
+
     public Option(String executable) {
         String nextID = executable.substring(Math.max(Math.max(Math.max(executable.lastIndexOf(']') + 1, executable.lastIndexOf('>') + 1), executable.lastIndexOf('"') + 1), executable.lastIndexOf(')') + 1));
-        System.out.println("Find: " + nextID);
-        this.executable = executable.replace(nextID, "");
+        event = new Event(executable.replace(nextID, ""));
         if (nextID.length() > 0) {
             pointer = Life.load("{" + nextID + "}");
-//            System.out.println(pointer.getExecuteable());
+//            System.out.println(pointer.getExecutable());
         }
     }
-    public String getEvent() {
-        return executable;
+    public Event getEvent(){
+        return event;
+    }
+    public String getExecutable() {
+        return event.getExecutable();
     }
     public Event getPointer() {
         return pointer;

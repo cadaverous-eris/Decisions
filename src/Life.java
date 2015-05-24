@@ -13,21 +13,19 @@ public class Life{
         events = new ArrayList<Event>();
         miscEvents = 0;
     }
+    /*---------------------
+             LOADING
+     ----------------------*/
 
     public static Event load(String id) {
-        //if (id.equals("death")) { System.out.println("You die sad and alone."); return; }
-        //Scanner console = new Scanner(System.in);
         for (int i = 0; i < events.size(); i++) {
             if (events.get(i) != null && events.get(i).getID().equals(id)) {
-                System.out.println("ARCHIVED");
                 return events.get(i);
 
             }
         }
-
         return loadFromFile(id);
     }
-
     public static Event loadFromFile(String id){
         Scanner file;
         File choices;
@@ -41,10 +39,7 @@ public class Life{
         }
         while (file.hasNextLine()) {
             String l = file.nextLine();
-            System.out.println("Line: " + l);
-            System.out.println("ID: " + id);
             if (l.contains(id)) {
-                System.out.println("FOUND: " + id);
                 event = new Event(l);
                 events.add(event);
                 addOptions(file, event.getOptions());
@@ -53,12 +48,10 @@ public class Life{
         }
         return event;
     }
-
     private static String addOptions(Scanner file, ArrayList<Option> options){
         while(file.hasNextLine()){
             String o = file.nextLine();
             o = o.replaceAll("^\\s+|\\s+$", "");
-            System.out.println("Option: " + o);
             if (o.contains("{}")) {
                 Event misc = new Event("{" + (miscEvents += 1) + "}" + o.substring(o.indexOf('}') + 1));
                 events.add(misc);
@@ -72,41 +65,69 @@ public class Life{
         return null;
     }
 
-    public String eventParser(String event, ArrayList<String> options){//make void
-        while(event.length() > 0) event = modParser(outParser(priorityParser(event, options)));
+    /*---------------------
+            PARSING
+     ----------------------*/
+
+    public Event eventParser(Event event){//make void
+        while(event.getExecutable().length() > 0)
+            modParser(outParser(priorityParser(event)));
         return event;
     }
-    public String optionParser(String event){return event;}
-    public String priorityParser(String event, ArrayList<String> options){
-        if (event.charAt(0)=='<'){
-            if (event.toLowerCase().charAt(1)=='f') {//set importance
-                int i = 0;
-                int f = Integer.parseInt(event.substring(event.indexOf(' '), event.indexOf('>')));
-                while(options.get(i).charAt(0) == '>') i++;
-                options.add(i, ">" + options.remove(f));
+    public Event optionParser(Event event){
+        int i = 0;
+        for (Option o: event.getOptions()) {
+            if (o.getExecutable().charAt(0) == '>') {
+                i++;
+                if (conditionalParser(o.getEvent())) {
+                    eventParser(o.getEvent());
+                    eventParser(o.getPointer());
+                }
             }
-            if (event.toLowerCase().charAt(1)=='r') {
-                String r = options.get(new Random().nextInt(options.size()));
-                options.clear();
-                options.add(r);
+        }
+        ArrayList<String> options = new ArrayList<String>();
+        for (Option o: event.getOptions())
+            if (conditionalParser(o.getEvent())) {
+                options.add(o.getExecutable().substring(o.getExecutable().indexOf('"'), o.getExecutable().lastIndexOf('"')));
+                o.setExecutable(o.getExecutable().replace(options.get(options.size() - 1), ""));
             }
-            //if (event.toLowerCase().charAt(1)=='c') {
+        Option o = event.getOptions().get(decide((String[]) options.toArray()));
+        eventParser(o.getEvent());
+        eventParser(o.getPointer());
+        return event;
+    }
 
-            //}
-            event = event.substring(event.indexOf('>'));
+    public Event priorityParser(Event event){
+        if (event.getExecutable().charAt(0)=='<'){
+            if (event.getExecutable().toLowerCase().charAt(1)=='f') {//set importance
+                int i = 0;
+                int f = Integer.parseInt(event.getExecutable().substring(event.getExecutable().indexOf(' ') + 1, event.getExecutable().indexOf('>')));
+                while(event.getOptions().get(i).getExecutable().charAt(0) == '>') i++;
+                if (f < event.getOptions().size())
+                    event.getOptions().get(f).setExecutable(">" + event.getOptions().get(i).getExecutable());
+            }
+            if (event.getExecutable().toLowerCase().charAt(1)=='r') {
+                Option r = event.getOptions().get(new Random().nextInt(event.getOptions().size()));
+                event.getOptions().clear();
+                event.getOptions().add(r);
+            }
+            event.setExecutable(event.getExecutable().substring(event.getExecutable().indexOf('>')));
         }
         return event;
     }
-    public String outParser(String str){
-        if (str.charAt(0) == '"') out(str.substring(1, str.indexOf('"', 1)));
-        return str.substring(str.indexOf('"', 1));
+    public Event outParser(Event event){
+        if (event.getExecutable().charAt(0) == '"') {
+            out(event.getExecutable().substring(1, event.getExecutable().indexOf('"', 1)));
+            event.setExecutable(event.getExecutable().substring(1, event.getExecutable().indexOf('"', 1)));
+        }
+        return event;
     }
-    public String modParser(String str){//take first attribute as toMod, set = to tokenized string using javascript
-        if (str.charAt(0) == '['){
+    public Event modParser(Event event){//take first attribute as toMod, set = to tokenized string using javascript
+        if (event.getExecutable().charAt(0) == '['){
             String mod;
             int toMod = -1;
-            out(mod = str.substring(1, str.indexOf(']')).toLowerCase());
-            str = str.substring(str.indexOf(']') + 1);
+            out(mod = event.getExecutable().substring(1, event.getExecutable().indexOf(']')).toLowerCase());
+            event.setExecutable(event.getExecutable().substring(event.getExecutable().indexOf(']') + 1));
             for  (int i = 0; i < characters.get(0).getAttributes().getAttributes().size(); i++) {
                 if (mod.contains(characters.get(0).getAttributes().getAttributes().get(i).getName()))
                     toMod = characters.get(0).getAttributes().getAttributes().get(i).getValue();
@@ -122,8 +143,33 @@ public class Life{
                 }
             }
         }
-        return str;
+        return event;
     }
+    public Boolean conditionalParser(Event event){
+        if (event.getExecutable().charAt(0) == '('){
+            String check;
+            int toCheck = -1;
+            out(check = event.getExecutable().substring(1, event.getExecutable().indexOf(')')).toLowerCase());
+            event.setExecutable(event.getExecutable().substring(event.getExecutable().indexOf(')') + 1));
+            for  (int i = 0; i < characters.get(0).getAttributes().getAttributes().size(); i++) {
+                if (check.contains(characters.get(0).getAttributes().getAttributes().get(i).getName()))
+                    toCheck = characters.get(0).getAttributes().getAttributes().get(i).getValue();
+                check = check.replaceAll(characters.get(0).getAttributes().getAttributes().get(i).getName(), "" + characters.get(0).getAttributes().getAttributes().get(i).getValue());
+            }
+            if (toCheck != -1){
+                String[] ints = check.split("\\s+");
+                if (Integer.parseInt(ints[1]) < Integer.parseInt(ints[0]) && Integer.parseInt(ints[0]) < Integer.parseInt(ints[2]))
+                    return true;
+                return false;
+            }else
+                out("That's not an attribute");
+        }
+        return true;
+    }
+
+    /*---------------------
+              IO
+     ----------------------*/
 
     private void out(String out){
         System.out.print(out);
@@ -138,8 +184,8 @@ public class Life{
         return choice;
     }
 
-    public void init(){
-        load("{birth}");
+    public void start(){
+        eventParser(load("{birth}"));
     }
 /*
     private void birth(){
