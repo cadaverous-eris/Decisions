@@ -437,7 +437,7 @@
 
 {templeOfDoom}"That was awesome, just like Indiana Jones. You hold the heart in your hand, and wonder what to do next."
 	"Clean up the mess."disposeBody
-	E"at the heart. It probably has tons of fiber, or something."cannibalism
+	"Eat the heart. It probably has tons of fiber, or something."cannibalism
 
 {attack}"You attack your opponent."<random>
 	"An onlooker calls the cops, who arrest you."jail
