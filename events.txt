@@ -67,7 +67,12 @@
 	"You get high, and reflect deeply on your life."[intelligence+1]summer
 	"You get high, and love it. You want something better, so you try cocaine. One thing leads to another, and you become a crackwhore."crackwhore
 
-{crackwhore}"You've resorted to prostitution in order to get crack."
+{crackwhore}"You've resorted to prostitution in order to get crack."<random>
+	""
+	"One of your clients had HIV."hiv
+	"It's been a while since you've had a client, and you really need more crack. You start to feel the effects of withdrawal. You wander into the streets, and someone calls 911."hospital
+	"One of your clients was a murderer. They stab you in the face with a sharpened crack pipe as they climax."death
+{}
 	"Realize how pathetic your life is, and commit suicide."death
 	"Realize how pathetic your life is, and go to rehab."rehab
 	"Continue being a crackwhore."crackwhore
@@ -376,6 +381,7 @@
 	"You go to the Everglades, and get eaten by a duck while trying to escape a crocodile."death
 	"A Florida man kills you."death
 	"You go to DisneyLand, where you accidentally pick a fight with Mickey Mouse, who proceeds to bite your head off."death
+	"You are hiking around a lake when you stumble across a bear. You reach for your shotgun, only to realize the bear has already taken it from you. You pause to ask it how it did that, but the bear shoots you before you have a chance to speak."death
 
 {robBank}"You've seen so many heist movies, so you are basically an expert at robbing places. Bank robbing will be a good way to start your life of crime."<random>
 	"The movies make it look so much easier! You got caught and arrested."jail
@@ -443,3 +449,33 @@
 	"An onlooker calls the cops, who arrest you."jail
 	"You attack a little too viciously, and accidentally shove a cyanide capsule down their throat."disposeBody
 	"You overestimated yourself. Your opponent tears your face off with their teeth, and leaves you to die."death
+
+{hospital}"You wake in a hospital room."
+	"Call for a nurse."nurseCall
+	"Pull out the IVs and leave."hospitalEscape
+	"Fall back asleep."falseMorgue
+
+{falseMorgue}"You wake up in a cold, dark place. It seems to be a small metal box. After a few hours, or maybe days, Someone opens the drawer, and you realise you are in a morgue."<random>
+	"The mortitian is understandably startled when they see you moving and talking, and start screaming about zombies."fakeZombie
+	"You don't want to startle the mortitian, so you play dead. The mortitian follows procedure, and cuts you open, performs the autopsy, and closes the drawer, all without noticing you are still alive. You bleed out in the cold, dark drawer."death
+	"The mortitian sees you are alive, and apoligizes profusely for the misunderstanding, and suddenly stabs you in the face, muttering something about how they have to do everything theirself."death
+
+{fakeZombie}"The mortitian seems completely convinced that you are undead."<force 0>
+	(intelligence 0 7)"The mortitian is a professional. If they think you're a zombie, you must be a zombie."fakeZombieOutbreak
+	"Knowing that the only way to stop the zombie apocalypse is to kill you, the mortitian stabs you in the face with a bonesaw and runs away, screaming."death
+
+{fakeZombieOutbreak}"If you are a zombie, you should probably start increasing your numbers. You go out and start biting everyone in sight."<random>
+	"Your first victim ins't very happy about being bitten, and smacks you in the faec with their briefcase, knocking you out. You wake up in police station, and explain that you are a zombie. Next thing you know, you are being taken to a mental institution where you live for the rest of your life."death
+	"You soon have a large army, I mean hoard, of zombies following you. Apparently zombies can run, because the zombies behind you start sprinting ahead, trampling you, stomping your head in."death
+
+{hospitalEscape}"Those IVs must have been important, because you start to feel dizzy soon after removing them. You pass out."<random>
+	hospital
+	death
+
+{nurseCall}"A nurse enters the room."
+	"Attack her."attackNurse
+	"Ask what happened."
+
+{attackNurse}"You take a swing at the nurse."<random>
+	(endurance 15 30)"You knock the nurse out, remove the IVs from your arm, and make a run for it."hospitalEscape
+	"You are too weak to do any harm, but the nurse isn't. Startled by your attack, the nurse takes a swing at you with whatever happened to be in their hand, which in this case is a scalpel. The nurse panics, and runs away, leaving you to bleed out alone."death
