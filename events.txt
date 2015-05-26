@@ -349,6 +349,7 @@
 {alcohol}"You get drink some beer, gin, and scotch."<force 0><force 1>
 	(endurance 15 30 || weight 300 1000)"You get a bit tipsy, but it wears off quickly. You go home."adulthood
 	(endurance 10 14 || weight 250 299)"You get drunk."drunk
+	(endurance 6 9 || weight 175 249)"You get drunk, and someone takes you to the hospital."hospital
 	"You die of alcohol poisoning after passing out in a public restroom."death
 	
 {drunk}"You are too drunk to function as a human."<random>
@@ -449,6 +450,7 @@
 	"An onlooker calls the cops, who arrest you."jail
 	"You attack a little too viciously, and accidentally shove a cyanide capsule down their throat."disposeBody
 	"You overestimated yourself. Your opponent tears your face off with their teeth, and leaves you to die."death
+	"Your opponent stabs you in the crotch, and leaves. You think you hear someone calling 911 as you black out."hospital
 
 {hospital}"You wake in a hospital room."
 	"Call for a nurse."nurseCall
