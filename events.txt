@@ -269,6 +269,7 @@
 
 {pussyOut}"You realize that you will never have the cajones to do anything worthwhile."<random>
 	"You decide that if you can't do anything worthwhile, there's no reason to be alive."death
+	"You start to think that your life will never amount to anything, so you walk into oncoming traffic. You survive, just barely, and you pass out as you are being loaded onto an ambulance."hospital
 	"You turn to drugs to find happiness."buyDrugsAdult
 
 {buyDrugsAdult}"You journey to the shadier part of town and find a dealer."
@@ -283,7 +284,7 @@
 
 {weed}"You smoke the pot and get high."<random>
 	"You decide to go for a walk, and end up getting caught by a police officer. You shouldn't have brought your bong out of the house." jail
-	"You decide to go for a drive. The weed has muddled your brain, so you drive off the side of the road on the mountainside and fall to your death."death
+	"You decide to go for a mountain drive. The weed has muddled your brain, so you drive off the side of the road on the mountainside and fall to your death."death
 	"AWWWWW YISSSS!"adulthood
 
 {crack}"You smoke crack out of a makeshift crackpipe."<random>
@@ -344,6 +345,7 @@
 {buyFood}"You go to Chipotle."<random>
 	"You eat the delicious food, but later have a traumatizing experience on the toilet, and then spend a few hours cleaning the bathroom."[money-1][weight-1]adulthood
 	"You eat the delicious food. And then you eat more. And more. Finally you run out of money and have to go home."[money-money][weight+40]adulthood
+	"You eat the delicious burritos, but start to feel sick soon after. As you get up to leave the restaurant, you begin uncontrollably spraying fiery diarhrea everywhere until you pass out in a puddle of your own feces."hospital
 	(relationship 0 0)"You see a beautiful person at the Chipotle, and compliment them."compliment
 
 {alcohol}"You get drink some beer, gin, and scotch."<force 0><force 1>
@@ -441,6 +443,7 @@
 {defend}"You try to defend yourself as peacefully as possible."<random>
 	"You succeed, and your opponent eventually collapses and passes out."adulthood
 	"Your attacker shows no mercy, and literally turns you inside out, and leaves your remains outside an orphanage."death
+	"Your attacker gouges out your eyes, cuts themself, and spills their blood into your empty eye sockets. Your attacker apparently had HIV, because they have now infected you."hiv
 
 {templeOfDoom}"That was awesome, just like Indiana Jones. You hold the heart in your hand, and wonder what to do next."
 	"Clean up the mess."disposeBody
@@ -464,7 +467,7 @@
 
 {fakeZombie}"The mortitian seems completely convinced that you are undead."<force 0>
 	(intelligence 0 7)"The mortitian is a professional. If they think you're a zombie, you must be a zombie."fakeZombieOutbreak
-	"Knowing that the only way to stop the zombie apocalypse is to kill you, the mortitian stabs you in the face with a bonesaw and runs away, screaming."death
+	"Knowing that the only way to stop the zombie apocalypse is to kill you, the mortitian slices your head open with a bonesaw and runs away, screaming."death
 
 {fakeZombieOutbreak}"If you are a zombie, you should probably start increasing your numbers. You go out and start biting everyone in sight."<random>
 	"Your first victim ins't very happy about being bitten, and smacks you in the faec with their briefcase, knocking you out. You wake up in police station, and explain that you are a zombie. Next thing you know, you are being taken to a mental institution where you live for the rest of your life."death
@@ -476,7 +479,11 @@
 
 {nurseCall}"A nurse enters the room."
 	"Attack her."attackNurse
-	"Ask what happened."
+	"Ask what happened."questionNurse
+
+{questionNurse}"The nurse shoots you a glare, and doesn't respond. Something seems suspicious."<random>
+	"Turns out the nurse just didn't want to be the one to break the news to you. You have brain cancer. It kills you within a few months of your release from the hospital."death
+	"This is no ordinary hospital. This is an old hospital, secretly converted into an illegal drug testing center, where some fake paramedics brought you. You have no choice but to live the rest of your life as a lab rat..."falseMorgue
 
 {attackNurse}"You take a swing at the nurse."<random>
 	(endurance 15 30)"You knock the nurse out, remove the IVs from your arm, and make a run for it."hospitalEscape
