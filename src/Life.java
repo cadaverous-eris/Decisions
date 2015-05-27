@@ -5,11 +5,12 @@ import java.io.File;
 import java.util.*;
 
 public class Life{
-    public static List<Character> characters;
-    public static List<Event> events;
-    public static int miscEvents;
+    public List<Character> characters;
+    public List<Event> events;
+    public int miscEvents;
     public Life(){
         characters = new ArrayList<Character>();
+        characters.add(new Character());
         events = new ArrayList<Event>();
         miscEvents = 0;
     }
@@ -17,16 +18,15 @@ public class Life{
              LOADING
      ----------------------*/
 
-    public static Event load(String id) {
+    public Event load(String id) {
         for (int i = 0; i < events.size(); i++) {
-            if (events.get(i) != null && events.get(i).getID().equals(id)) {
+            if (events.get(i).getID().equals(id)) {
                 return events.get(i);
-
             }
         }
         return loadFromFile(id);
     }
-    public static Event loadFromFile(String id){
+    public Event loadFromFile(String id){
         Scanner file;
         File choices;
         Event event = null;
@@ -37,9 +37,12 @@ public class Life{
             System.out.println("No file found");
             return null;
         }
+        //out(id + "\n");
         while (file.hasNextLine()) {
             String l = file.nextLine();
+            l = l.replaceAll("^\\s+|\\s+$", "");
             if (l.contains(id)) {
+                //out(l + "\n");
                 event = new Event(l);
                 events.add(event);
                 addOptions(file, event.getOptions());
@@ -48,7 +51,7 @@ public class Life{
         }
         return event;
     }
-    private static String addOptions(Scanner file, ArrayList<Option> options){
+    private String addOptions(Scanner file, ArrayList<Option> options){
         while(file.hasNextLine()){
             String o = file.nextLine();
             o = o.replaceAll("^\\s+|\\s+$", "");
@@ -58,7 +61,7 @@ public class Life{
                 for (int i = 0; i < options.size(); i++) options.get(i).setPointer(misc);
                 addOptions(file, misc.getOptions());
             } else if (o.contains("{"))
-                return o; //return line which is not an option
+                return o; //return first line which is not an option
             if (o.length() > 0)
                 options.add(new Option(o));
         }
@@ -69,115 +72,18 @@ public class Life{
             PARSING
      ----------------------*/
 
-    public Event eventParser(Event event){//make void
-        while(event.getExecutable().length() > 0)
-            modParser(outParser(priorityParser(event)));
-        return event;
-    }
-    public Event optionParser(Event event){
-        int i = 0;
-        for (Option o: event.getOptions()) {
-            if (o.getExecutable().charAt(0) == '>') {
-                i++;
-                if (conditionalParser(o.getEvent())) {
-                    eventParser(o.getEvent());
-                    eventParser(o.getPointer());
-                }
-            }
-        }
-        ArrayList<String> options = new ArrayList<String>();
-        for (Option o: event.getOptions())
-            if (conditionalParser(o.getEvent())) {
-                options.add(o.getExecutable().substring(o.getExecutable().indexOf('"'), o.getExecutable().lastIndexOf('"')));
-                o.setExecutable(o.getExecutable().replace(options.get(options.size() - 1), ""));
-            }
-        Option o = event.getOptions().get(decide((String[]) options.toArray()));
-        eventParser(o.getEvent());
-        eventParser(o.getPointer());
-        return event;
-    }
-
-    public Event priorityParser(Event event){
-        if (event.getExecutable().charAt(0)=='<'){
-            if (event.getExecutable().toLowerCase().charAt(1)=='f') {//set importance
-                int i = 0;
-                int f = Integer.parseInt(event.getExecutable().substring(event.getExecutable().indexOf(' ') + 1, event.getExecutable().indexOf('>')));
-                while(event.getOptions().get(i).getExecutable().charAt(0) == '>') i++;
-                if (f < event.getOptions().size())
-                    event.getOptions().get(f).setExecutable(">" + event.getOptions().get(i).getExecutable());
-            }
-            if (event.getExecutable().toLowerCase().charAt(1)=='r') {
-                Option r = event.getOptions().get(new Random().nextInt(event.getOptions().size()));
-                event.getOptions().clear();
-                event.getOptions().add(r);
-            }
-            event.setExecutable(event.getExecutable().substring(event.getExecutable().indexOf('>')));
-        }
-        return event;
-    }
-    public Event outParser(Event event){
-        if (event.getExecutable().charAt(0) == '"') {
-            out(event.getExecutable().substring(1, event.getExecutable().indexOf('"', 1)));
-            event.setExecutable(event.getExecutable().substring(1, event.getExecutable().indexOf('"', 1)));
-        }
-        return event;
-    }
-    public Event modParser(Event event){//take first attribute as toMod, set = to tokenized string using javascript
-        if (event.getExecutable().charAt(0) == '['){
-            String mod;
-            int toMod = -1;
-            out(mod = event.getExecutable().substring(1, event.getExecutable().indexOf(']')).toLowerCase());
-            event.setExecutable(event.getExecutable().substring(event.getExecutable().indexOf(']') + 1));
-            for  (int i = 0; i < characters.get(0).getAttributes().getAttributes().size(); i++) {
-                if (mod.contains(characters.get(0).getAttributes().getAttributes().get(i).getName()))
-                    toMod = characters.get(0).getAttributes().getAttributes().get(i).getValue();
-                mod = mod.replaceAll(characters.get(0).getAttributes().getAttributes().get(i).getName(), "" + characters.get(0).getAttributes().getAttributes().get(i).getValue());
-            }
-            if (toMod != -1){
-                ScriptEngineManager mgr = new ScriptEngineManager();
-                ScriptEngine engine = mgr.getEngineByName("JavaScript");
-                try{
-                    characters.get(0).getAttributes().getAttributes().get(toMod).setValue((Integer) engine.eval(mod));
-                }catch (ScriptException e){
-                    out("Script Exception: Javascript: Cannot Evaluate: " + mod);
-                }
-            }
-        }
-        return event;
-    }
-    public Boolean conditionalParser(Event event){
-        if (event.getExecutable().charAt(0) == '('){
-            String check;
-            int toCheck = -1;
-            out(check = event.getExecutable().substring(1, event.getExecutable().indexOf(')')).toLowerCase());
-            event.setExecutable(event.getExecutable().substring(event.getExecutable().indexOf(')') + 1));
-            for  (int i = 0; i < characters.get(0).getAttributes().getAttributes().size(); i++) {
-                if (check.contains(characters.get(0).getAttributes().getAttributes().get(i).getName()))
-                    toCheck = characters.get(0).getAttributes().getAttributes().get(i).getValue();
-                check = check.replaceAll(characters.get(0).getAttributes().getAttributes().get(i).getName(), "" + characters.get(0).getAttributes().getAttributes().get(i).getValue());
-            }
-            if (toCheck != -1){
-                String[] ints = check.split("\\s+");
-                if (Integer.parseInt(ints[1]) < Integer.parseInt(ints[0]) && Integer.parseInt(ints[0]) < Integer.parseInt(ints[2]))
-                    return true;
-                return false;
-            }else
-                out("That's not an attribute");
-        }
-        return true;
-    }
 
     /*---------------------
               IO
      ----------------------*/
 
-    private void out(String out){
+    public void out(String out){
         System.out.print(out);
     }
-    private int decide(String[] choices){
+    public int decide(String[] choices){
         int choice;
-            for (int i = 0; i < choices.length; i++)
-                out("[" + (i + 1) + "]" + choices[i]);
+        for (int i = 0; i < choices.length; i++)
+            out("[" + (i + 1) + "]" + choices[i]);
         do{
             choice = (new Scanner(System.in)).nextInt() - 1;
         }while (choice == -1);
@@ -185,7 +91,10 @@ public class Life{
     }
 
     public void start(){
-        eventParser(load("{birth}"));
+        load("{birth}");
+        System.out.println(events.size());
+        events.get(0).execute();
+
     }
 /*
     private void birth(){

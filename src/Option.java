@@ -16,8 +16,9 @@ public class Option{
     public Option(String executable) {
         String nextID = executable.substring(Math.max(Math.max(Math.max(executable.lastIndexOf(']') + 1, executable.lastIndexOf('>') + 1), executable.lastIndexOf('"') + 1), executable.lastIndexOf(')') + 1));
         event = new Event(executable.replace(nextID, ""));
+        //System.out.println(event.getExecutable());
         if (nextID.length() > 0) {
-            pointer = Life.load("{" + nextID + "}");
+            pointer = Decisions.life.load("{" + nextID + "}");
 //            System.out.println(pointer.getExecutable());
         }
     }

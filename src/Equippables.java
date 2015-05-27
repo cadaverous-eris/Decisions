@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Created by BLUE on 20.05.15.
  */
 public class Equippables {
-    public class Equipable{
+    /*public class Equipable{
         private String modifiers;
         private String name;
         private int quantity;
@@ -54,6 +54,6 @@ public class Equippables {
             this.equipables.add(new Equipable(l.substring(l.indexOf(":") + 1),l.substring(0, l.indexOf(":"))));
         }
     }
-}
+}8*/}
 
 
