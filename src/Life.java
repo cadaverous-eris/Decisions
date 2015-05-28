@@ -57,9 +57,10 @@ public class Life{
             o = o.replaceAll("^\\s+|\\s+$", "");
             if (o.contains("{}")) {
                 Event misc = new Event("{" + (miscEvents += 1) + "}" + o.substring(o.indexOf('}') + 1));
-                events.add(misc);
-                for (int i = 0; i < options.size(); i++) options.get(i).setPointer(misc);
+                for (int i = 0; i < options.size(); i++)
+                    options.get(i).setPointer(misc);
                 addOptions(file, misc.getOptions());
+                events.add(misc);
             } else if (o.contains("{"))
                 return o; //return first line which is not an option
             if (o.length() > 0)
@@ -82,8 +83,11 @@ public class Life{
     }
     public int decide(String[] choices){
         int choice;
-        for (int i = 0; i < choices.length; i++)
-            out("[" + (i + 1) + "]" + choices[i]);
+        for (int i = 0; i < choices.length; i++) {
+            if (choices[i].length() == 0)
+                choices[i] = "Continue...";
+            out("\n[" + (i + 1) + "]" + choices[i]);
+        }
         do{
             choice = (new Scanner(System.in)).nextInt() - 1;
         }while (choice == -1);

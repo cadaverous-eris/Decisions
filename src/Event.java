@@ -46,20 +46,28 @@ public class Event {
 
     public void execute(){
         Decisions.life.out("Execute: " + executable);
-        while(modParser(outParser(priorityParser(executable))).length() > 0) Decisions.life.out("\nMain exec: " + this.getExecutable());
-        optionParser(this).execute();
+        String str = executable;
+        if (str.charAt(0) == '(')
+            str = str.substring(str.lastIndexOf(')') + 1);
+        while((str = modParser(outParser(priorityParser(str)))).length() > 0) ;
+        Event e = optionParser(this);
+        if (e != null)
+                e.execute();
     }
 
     public Event optionParser(Event event){
-        Decisions.life.out("Option: " + event);
+        if (event.getOptions().size() == 0)
+            return null;
+        Decisions.life.out("\nOption: " + event.getExecutable());
         int i = 0;
         for (Option o: event.getOptions()) {
+            Decisions.life.out("\nOPTIONNNNNN" + o.getExecutable());
             if (o.getExecutable().length() > 0 && o.getExecutable().charAt(0) == '>') {
                 i++;
                 o.setExecutable(o.getExecutable().substring(1));
                 if (conditionalParser(o.getEvent().getExecutable())) {
                     (o.getEvent()).execute();
-                    (o.getPointer()).execute();
+                    return o.getPointer();
                 }
             }
         }
@@ -72,7 +80,9 @@ public class Event {
                 o.setExecutable(o.getExecutable().replace(options.get(options.size() - 1), ""));
             }
         String[] decisions = new String[options.size()];
-        decisions = (String[]) options.toArray(decisions);
+        decisions = options.toArray(decisions);
+        //Decisions.life.out("\nIndex: " + Decisions.life.decide(decisions));
+
         Option o = event.getOptions().get(Decisions.life.decide(decisions));
         o.getEvent().execute();
         return o.getPointer();
@@ -99,8 +109,9 @@ public class Event {
     public String outParser(String event){
         Decisions.life.out("\nOut: " + event);
         if (event.length() > 0 && event.charAt(0) == '"') {
-            Decisions.life.out(event.substring(1, event.indexOf('"', 1)));
-            event = (event.substring(event.indexOf('"', 1)));
+            Decisions.life.out("\nHIIII: " + event);
+            Decisions.life.out(event.substring(1, event.indexOf('"', 1) + 1));
+            event = (event.substring(event.indexOf('"', 1) + 1));
         }
         return event;
     }
@@ -129,7 +140,7 @@ public class Event {
         return event;
     }
     public Boolean conditionalParser(String event){
-        Decisions.life.out("\nCon: " + event);
+        Decisions.life.out("\nCon: " + event + "ksjk");
         if (event.length() > 0 && event.charAt(0) == '('){
             String check;
             int toCheck = -1;
