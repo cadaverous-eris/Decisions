@@ -2,17 +2,17 @@
 	(luck 0 0)stillborn
 	born
 
-{stillborn}”You are stillborn.”
+{stillborn}"You are stillborn."
 	death
 
-{born}”You are born, it is a rather unremarkable affair, and you, are a rather unremarkable baby.”
+{born}"You are born, it is a rather unremarkable affair, and you, are a rather unremarkable baby."
 	childhood
 
-{childhood}”As you grow up, your life remains relatively dull. Everyday you wake up and eat:”
-	“oatmeal”
-	“eggs and bacon”[weight+5][endurance+5]
-	“cereal”[weight+20]
-	“pancakes”[weight+50]
+{childhood}"As you grow up, your life remains relatively dull. Everyday you wake up and eat:"
+	"oatmeal"
+	"eggs and bacon"[weight+5][endurance+5]
+	"cereal"[weight+20]
+	"pancakes"[weight+50]
 {}"Elementary and middle school pass without incident. They don't matter anyway."
 	highSchool
 
@@ -115,6 +115,7 @@
 	"Play videogames."[weight+1][perception+1]college3
 	"Try to find a significant other."tryLoveCollege
 	(relationship 1 1)"Go out with your significant other."dateCollege
+	"Talk to your science professor."innerSpace
 
 {college3}""<force 1>
 	(intelligence 20 40)"You graduate college!"adulthood
@@ -492,3 +493,28 @@
 {attackNurse}"You take a swing at the nurse."<random>
 	(endurance 15 30)"You knock the nurse out, remove the IVs from your arm, and make a run for it."hospitalEscape
 	"You are too weak to do any harm, but the nurse isn't. Startled by your attack, the nurse takes a swing at you with whatever happened to be in their hand, which in this case is a scalpel. The nurse panics, and runs away, leaving you to bleed out alone."death
+
+{innerSpace}"Your professor has been doing research into miniturization."
+	"Ask for a demonstration."mini
+	"Leave."college3
+
+{mini}"Your professor puts you into the miniturizer, and you are shrunk to the microscopic scale."<random>
+	"The professor, a woman, must be into some wierd stuff. She uses a microscope and some special tools to pick you up, and insert you into her vagina."enterVagina
+	"The professor, a man, must be into some wierd stuff. He uses a microscope and some special tools to pick you up, and insert you into his penis."enterPenis
+
+{enterPenis}"Well, this is something you never expected to do. You are unsure which way goes further into the body, and which way gets you out."
+	"You pick a direction and start moving. You go through the urethra, past the bladder, the prostate, and the cowper's glands, and into a testicle through the vas deferens."exitTestes
+	
+{exitTestes}"You evidently went the wrong way. You need to get out of the testicle."<random>
+	"While trying to figure out how to exit the testicle, you find some sperm cells. They mistake you for an egg, and start ramming into you, trying to fertilize you. You get beaten to death by the sperm."death
+	"You end up trapped in the testicle for a while, and eventually you get pulled out with a bunch of sperm. The professor must be about to ejaculate."ejaculation
+	"While trying to figure out how to get out of the testicle, the miniturization wears off. You explode out of the professor, and go home to shower."college3
+
+{ejaculation}"It's like health class came to life! You go back out the way you came. Ha. Came."<random>
+	"It's a fap! You fall down, and get washed into the shower drain, where you drown."death
+	"You suffocate in a condom."death
+
+{enterVagina}"You don't know how to get out of the vagina, so you start moving in a random direction. You go through the cervix, the uterus, a fallopian tube, and into an ovary."<random>
+	"You hang out in the professor for a while, and end up back in the uterus. You slowly grow, and after nine months, you are reborn."birth
+	"Your miniturization wears off, and you burst out of your professor and go home to shower."college3
+	"You starve to death in the ovary."death
