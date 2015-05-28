@@ -408,6 +408,10 @@
 
 {airForce}"You will be the best dog fighter since Snoopy, aside from your childhood pet, Gary, who never lost a fight."
 	"You fly your B-52 over Venezuela, and consider dropping the bomb. Nobody will notice the loss of just one Latin American country."nukes
+	"ALLAHU AKBAR!"terrorist
+
+{terrorist}"You fly toward your target, the White House, and aim you plane toward the oval office."
+	"Lucky for you, the president happened to be in the oval office, and you crash straight into him."death
 
 {nukes}"You have the power to kill millions right at the tip of your fingers. Do you do it?"
 	"Of course! Hitler didn't become a dictator by sitting on his butt and letting people live."genocide
