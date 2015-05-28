@@ -17,8 +17,11 @@ public class Attributes {
         private String name;
         private int value;
         public Attribute(String name){
-            this.name = name.toLowerCase();
-            value = 0;
+            this.name = name.substring(0, name.indexOf(" ")).toLowerCase();
+            String minMax = name.substring(name.indexOf(" ") + 1);
+            int min = Integer.parseInt(minMax.substring(0, minMax.indexOf(" ")));
+            int max = Integer.parseInt(minMax.substring(minMax.indexOf(" ") + 1, minMax.length()));
+            value = (Math.random() * (max-min)) + min;
         }
         public String getName() {
             return name;
