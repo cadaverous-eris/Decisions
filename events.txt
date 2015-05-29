@@ -9,10 +9,10 @@
 	childhood
 
 {childhood}"As you grow up, your life remains relatively dull. Everyday you wake up and eat:"
-	"oatmeal"
-	"eggs and bacon"[weight+5][endurance+5]
-	"cereal"[weight+20]
-	"pancakes"[weight+50]
+	"Oatmeal, for the carbohydrates, fiber, and micronutrients."[endurance+5][weight+5][perception+1]
+	"Eggs and bacon, for the fat, protein, and vitamins."[weight+5][endurance+5]
+	"Cereal, for the carbohydrates, vitamins, and minerals."[weight+20][endurance+1]
+	"Yogurt, for the protein, vitamins, calcium, and fat."[weight+30][endurance+2]
 {}"Elementary and middle school pass without incident. They don't matter anyway."
 	highSchool
 
@@ -58,17 +58,18 @@
 	"AWWWWW YISSSSS!" party2
 
 {buyDrugs}"You find a drug dealer"<random>
-	"You get some dank weed."[money-1] weedHighSchool
+	"You get some dank weed."[money-1][weight+10][cancerrisk+2][perception-2] weedHighSchool
 	"You get caught by the police."jail
 	"As you enter the worse side of town to find a dealer, you get shot. The shooter leaves before you see them, and you are left alone."death
 
 {weedHighSchool}"You decide to smoke that kush."<random>
 	"You get high, and nothing much happens."summer
 	"You get high, and reflect deeply on your life."[intelligence+1]summer
-	"You get high, and love it. You want something better, so you try cocaine. One thing leads to another, and you become a crackwhore."crackwhore
+	"You get high, and love it. You want something better, so you try cocaine. One thing leads to another, and you become a crackwhore."[cancerrisk+1][weight-20]crackwhore
 
 {crackwhore}"You've resorted to prostitution in order to get crack."<random>
 	""
+	"The crack causes heart problems, and you have a heart attack, causing you to die in a dark backstreet."death
 	"One of your clients had HIV."hiv
 	"It's been a while since you've had a client, and you really need more crack. You start to feel the effects of withdrawal. You wander into the streets, and someone calls 911."hospital
 	"One of your clients was a murderer. They stab you in the face with a sharpened crack pipe as they climax."death
@@ -165,11 +166,12 @@
 	"Go shopping."shop
 	"Try to get drugs."buyDrugsAdult
 	"Drink alcohol."alcohol
-	"Play video games."[weight+1][perception+1]adulthood
-	"Go to the gym."[endurance+1][weight-1]adulthood
+	"Play video games."[weight+2][perception+1]adulthood
+	"Go to the gym."[endurance+2][weight-1]adulthood
 	"Hang out with friends."[charisma+1]friends
 	"Be 'spontaneous.'"spontaneous
 	"Your life is too boring. End it all."death
+	"Sleep."[perception+1][cancerrisk-1][intelligence+1][endurance+1]
 	
 {tryLove}""<force 1><random>
 	"You go to a bar to find someone to settle down with."bar
@@ -263,7 +265,13 @@
 {getAway}"You get away with it, amazingly."
 	adulthood
 
-{cannibalism}"You heard human tastes like veal, but you disagree. It tastes like pure happiness."<random>
+{cannibalism}"You have decided to eat your victim. Which part do you eat?"
+	"The brain, for the fat and calcium."[weight+10]cannibalism2
+	"The heart, for the protein, and iron."[endurance + 2]cannibalism2
+	"Bones, for the calcium and magnesium."[endurance+1]cannibalism2
+	"The liver, as it has a bunch of the nutrients."[weight+2][endurance+3][perception+1]
+
+{cannibalism2}"You heard human tastes like veal, but you disagree. It tastes like pure happiness."<random>
 	"The police knock on your door, search your house, and find the scraps you haven't eaten. Offering them the leftovers doesn't seem to help, and you are arrested."jail
 	"Apparently your victim had HIV, because now you have it."hiv
 	getAway
