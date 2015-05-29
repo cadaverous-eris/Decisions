@@ -12,3 +12,4 @@ relationship 0 0
 kids 0 0
 income 0 0
 sexualorientation 0 4
+cancerrisk 2 5
