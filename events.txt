@@ -154,8 +154,9 @@
 	"Your date stands you up."[relationship-1]college3
 	"Your date is average."college3
 
-{adulthood}"Adult life is boring."[money-2*kids+relationship][money+income]"You have free time from your job."<force 0>
+{adulthood}"Adult life is boring."[money-2*kids+relationship][money+income]"You have free time from your job."<force 0><force 1>
 	(money -100 0)"You are broke, and become homeless."homeless
+	(cancerrisk 7 20)"You start feeling sick, so you go to the doctor's office. Turns out you have cancer."[cancerrisk-cancerrisk]cancer
 	"Look for a new job."applyJob
 	(relationship 0 0)"Look for a significant other."tryLove
 	(relationship 1 1)"Propose to your significant other."[money-3]propose
@@ -291,14 +292,14 @@
 	"'Yeah let me hook you up.' You end up becoming a drug dealer."[income-income][income+7]adulthood
 	"'Hey, you look like a cop!' He shoots you and runs off. You bleed out slowly in the dark alley."death
 
-{weed}"You smoke the pot and get high."<random>
+{weed}"You smoke the pot and get high."[cancerrisk+2]<random>
 	"You decide to go for a walk, and end up getting caught by a police officer. You shouldn't have brought your bong out of the house." jail
 	"You decide to go for a mountain drive. The weed has muddled your brain, so you drive off the side of the road on the mountainside and fall to your death."death
 	"AWWWWW YISSSS!"adulthood
 
 {crack}"You smoke crack out of a makeshift crackpipe."<random>
-	"You love the feeling the crack gives you, and before you know it, you are back for more. The addiction consumes you, and you lose your job, forcing you to become a crackwhore."[income-income][crackwhore]
-	"AWWW YISSSS!"adulthood
+	"You love the feeling the crack gives you, and before you know it, you are back for more. The addiction consumes you, and you lose your job, forcing you to become a crackwhore."[income-income][cancerrisk+2][crackwhore]
+	"AWWW YISSSS!"[cancerrisk+2]adulthood
 
 {homeless}"You find a decent sized garbage bag to call home."<random>
 	"You become a crackwhore to get drugs so you can live with yourself."crackwhore
@@ -423,7 +424,7 @@
 	"Lucky for you, the president happened to be in the oval office, and you crash straight into him."death
 
 {nukes}"You have the power to kill millions right at the tip of your fingers. Do you do it?"
-	"Of course! Hitler didn't become a dictator by sitting on his butt and letting people live."genocide
+	"Of course! Hitler didn't become a dictator by sitting on his butt and letting people live."[cancerrisk+4]genocide
 	"Nahhhh. You serve your country, and go home."adulthood
 
 {genocide}"You have killed millions of people, you bastard."
@@ -526,3 +527,7 @@
 	"You hang out in the professor for a while, and end up back in the uterus. You slowly grow, and after nine months, you are reborn."birth
 	"Your miniturization wears off, and you burst out of your professor and go home to shower."college3
 	"You starve to death in the ovary."death
+
+{cancer}"You convonce yourself that you can beat cancer."[weight-50][endurance-10]<random>
+	"You were wrong."death
+	"You were right."adulthood
