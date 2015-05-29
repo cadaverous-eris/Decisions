@@ -269,7 +269,7 @@
 	"The brain, for the fat and calcium."[weight+10]cannibalism2
 	"The heart, for the protein, and iron."[endurance + 2]cannibalism2
 	"Bones, for the calcium and magnesium."[endurance+1]cannibalism2
-	"The liver, as it has a bunch of the nutrients."[weight+2][endurance+3][perception+1]
+	"The liver, as it has a bunch of the nutrients."[weight+2][endurance+3][perception+1]cannibalism2
 
 {cannibalism2}"You heard human tastes like veal, but you disagree. It tastes like pure happiness."<random>
 	"The police knock on your door, search your house, and find the scraps you haven't eaten. Offering them the leftovers doesn't seem to help, and you are arrested."jail
