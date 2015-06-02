@@ -37,12 +37,10 @@ public class Life{
             System.out.println("No file found");
             return null;
         }
-        //out(id + "\n");
         while (file.hasNextLine()) {
             String l = file.nextLine();
             l = l.replaceAll("^\\s+|\\s+$", "");
             if (l.contains(id)) {
-                //out(l + "\n");
                 event = new Event(l);
                 events.add(event);
                 addOptions(file, event.getOptions());
@@ -61,18 +59,16 @@ public class Life{
                     options.get(i).setPointer(misc);
                 addOptions(file, misc.getOptions());
                 events.add(misc);
+                return o;
             } else if (o.contains("{"))
                 return o; //return first line which is not an option
             if (o.length() > 0)
+                if (!o.contains("\""))
+                    o = o.substring(0, o.indexOf(')') + 1) + "\"\"" + o;
                 options.add(new Option(o));
         }
         return null;
     }
-
-    /*---------------------
-            PARSING
-     ----------------------*/
-
 
     /*---------------------
               IO
@@ -94,10 +90,15 @@ public class Life{
         return choice;
     }
 
+    /*---------------------
+             Init
+     ----------------------*/
+
     public void start(){
-        load("{birth}");
+        load("{robbery}");
         System.out.println(events.size());
         events.get(0).execute();
+        out("\nYou die, sad, and alone.");
 
     }
 /*

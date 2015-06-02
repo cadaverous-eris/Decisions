@@ -8,17 +8,17 @@ public class Attributes {
     public List<Attribute> getAttributes() {
         return attributes;
     }
-
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
     }
-
     public class Attribute{
         private String name;
         private int value;
         public Attribute(String name){
-            this.name = name.toLowerCase();
-            value = 0;
+            String[] tokens = name.toLowerCase().split("\\s+");
+            this.name = tokens[0];
+            value = (new Random()).nextInt(Integer.parseInt(tokens[2])) + Integer.parseInt(tokens[1]);
+            System.out.print(name + " " + value + "\n");
         }
         public String getName() {
             return name;

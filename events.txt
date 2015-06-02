@@ -1,4 +1,4 @@
-﻿{birth}<force 0>
+﻿{birth}"You come out of the womb."<force 0>
 	(luck 0 0)stillborn
 	born
 
@@ -13,6 +13,7 @@
 	"Eggs and bacon, for the fat, protein, and vitamins."[weight+5][endurance+5]
 	"Cereal, for the carbohydrates, vitamins, and minerals."[weight+20][endurance+1]
 	"Yogurt, for the protein, vitamins, calcium, and fat."[weight+30][endurance+2]
+
 {}"Elementary and middle school pass without incident. They don't matter anyway."
 	highSchool
 
@@ -47,7 +48,7 @@
 	"You dance the night away."[endurance+1]
 	"You talk to friends."[charisma+1]
 {}"Someone offers you a drink."
-	"Accept." partyDrunk
+	"Accept."partyDrunk
 	"Decline."[charisma-1]party2
 
 {party2}"The party ends"
@@ -55,10 +56,10 @@
 
 {partyDrunk}"You get drunk out of your mind."<random>
 	"You decide to drive home, but hit a moose and bleed out on the side of the road."death
-	"AWWWWW YISSSSS!" party2
+	"AWWWWW YISSSSS!"party2
 
 {buyDrugs}"You find a drug dealer"<random>
-	"You get some dank weed."[money-1][weight+10][cancerrisk+2][perception-2] weedHighSchool
+	"You get some dank weed."[money-1][weight+10][cancerrisk+2][perception-2]weedHighSchool
 	"You get caught by the police."jail
 	"As you enter the worse side of town to find a dealer, you get shot. The shooter leaves before you see them, and you are left alone."death
 
@@ -90,7 +91,6 @@
 {robbery}"The robbery begins, hopefully nothing goes wrong..."<random>
 	"You get caught."jail
 	"You succeed"[money+3]highSchool
-
 {collegeApply}"Highschool draws to a close."<force 0><force 1><force 2>
 	(intelligence 12 30)"You get into a decent college."college
 	"You don't get into college."adulthood
@@ -142,7 +142,7 @@
 	death
 
 {pregnantCollege}""<random>
-	"Miscarriage. The grief drives you away from your friends and loved ones, and you commit suicide." death
+	"Miscarriage. The grief drives you away from your friends and loved ones, and you commit suicide."death
 	"You had a girl. Sorry."[kids+1]collegeKid
 	"You had a boy. Sorry."[kids+1]collegeKid
 
@@ -293,7 +293,7 @@
 	"'Hey, you look like a cop!' He shoots you and runs off. You bleed out slowly in the dark alley."death
 
 {weed}"You smoke the pot and get high."[cancerrisk+2]<random>
-	"You decide to go for a walk, and end up getting caught by a police officer. You shouldn't have brought your bong out of the house." jail
+	"You decide to go for a walk, and end up getting caught by a police officer. You shouldn't have brought your bong out of the house."jail
 	"You decide to go for a mountain drive. The weed has muddled your brain, so you drive off the side of the road on the mountainside and fall to your death."death
 	"AWWWWW YISSSS!"adulthood
 
@@ -528,6 +528,6 @@
 	"Your miniturization wears off, and you burst out of your professor and go home to shower."college3
 	"You starve to death in the ovary."death
 
-{cancer}"You convonce yourself that you can beat cancer."[weight-50][endurance-10]<random>
+{cancer}"You convince yourself that you can beat cancer."[weight-50][endurance-10]<random>
 	"You were wrong."death
 	"You were right."adulthood

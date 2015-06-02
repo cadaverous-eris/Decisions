@@ -15,6 +15,7 @@ public class Event {
     private ArrayList<Option> options;
     private String id;
     private String executable;
+
     public String getID() {
         return id;
     }
@@ -44,9 +45,14 @@ public class Event {
         options = new ArrayList<Option>();
     }
 
+    /*---------------------------
+              PARSING
+     ----------------------------*/
+
     public void execute(){
-        Decisions.life.out("Execute: " + executable);
         String str = executable;
+        if (str.length() == 0)
+            return;
         if (str.charAt(0) == '(')
             str = str.substring(str.lastIndexOf(')') + 1);
         while((str = modParser(outParser(priorityParser(str)))).length() > 0) ;
@@ -58,47 +64,47 @@ public class Event {
     public Event optionParser(Event event){
         if (event.getOptions().size() == 0)
             return null;
-        Decisions.life.out("\nOption: " + event.getExecutable());
         int i = 0;
         for (Option o: event.getOptions()) {
-            Decisions.life.out("\nOPTIONNNNNN" + o.getExecutable());
             if (o.getExecutable().length() > 0 && o.getExecutable().charAt(0) == '>') {
                 i++;
                 o.setExecutable(o.getExecutable().substring(1));
-                if (conditionalParser(o.getEvent().getExecutable())) {
+                if (conditionalParser(o.getExecutable())) {
                     (o.getEvent()).execute();
                     return o.getPointer();
                 }
             }
         }
         ArrayList<String> options = new ArrayList<String>();
-        options.add("");
-        for (Option o: event.getOptions())
-            if (o.getExecutable().length() > 0 && conditionalParser(o.getExecutable())) {
-                //options.add(new Integer(8));
-                options.add(o.getExecutable().substring(o.getExecutable().indexOf('"'), o.getExecutable().lastIndexOf('"')));
-                o.setExecutable(o.getExecutable().replace(options.get(options.size() - 1), ""));
+        for (int j = i; j < event.getOptions().size(); j++) { // set to start at i,
+            if (event.getOptions().get(j).getExecutable().length() > 0 && conditionalParser(event.getOptions().get(j).getExecutable())) {
+                options.add(event.getOptions().get(j).getExecutable().substring(event.getOptions().get(j).getExecutable().indexOf('"') + 1, event.getOptions().get(j).getExecutable().lastIndexOf('"')));
+                event.getOptions().get(j).setExecutable(event.getOptions().get(j).getExecutable().replace(options.get(options.size() - 1), ""));
             }
+        }
         String[] decisions = new String[options.size()];
         decisions = options.toArray(decisions);
         //Decisions.life.out("\nIndex: " + Decisions.life.decide(decisions));
 
-        Option o = event.getOptions().get(Decisions.life.decide(decisions));
+        Option o = event.getOptions().get(Decisions.life.decide(decisions) + i);
         o.getEvent().execute();
         return o.getPointer();
     }
 
     public String priorityParser(String event){
-        Decisions.life.out("\nPrio: " + event);
         if (event.length() > 0 && event.charAt(0)=='<'){
             int i = 0;
             int f = 0;
             if (event.toLowerCase().charAt(1)=='f')
                 f = Integer.parseInt(event.substring(event.indexOf(' ') + 1, event.indexOf('>')));
-            if (event.toLowerCase().charAt(1)=='r')
+            if (event.toLowerCase().charAt(1)=='r'){
                 f = new Random().nextInt(options.size());
-            while(options.get(f).getExecutable().charAt(0) == '>')
+                Decisions.life.out("Event" + event);
+            }
+            while(options.get(f).getExecutable().charAt(0) == '>'){
                 i++;
+                Decisions.life.out("Options: " + options.get(i));
+            }
             options.get(f).setExecutable(">" + options.get(f).getExecutable());
             if (f < getOptions().size())
                 options.add(i, options.remove(f));
@@ -107,24 +113,24 @@ public class Event {
         return event;
     }
     public String outParser(String event){
-        Decisions.life.out("\nOut: " + event);
-        if (event.length() > 0 && event.charAt(0) == '"') {
-            Decisions.life.out("\nHIIII: " + event);
-            Decisions.life.out(event.substring(1, event.indexOf('"', 1) + 1));
+        if (event.length() > 0 && event.charAt(0) == '"' && event.indexOf('"', 1) != -1) {
+            Decisions.life.out(event.substring(1, event.indexOf('"', 1)));
             event = (event.substring(event.indexOf('"', 1) + 1));
+        }else{
+            Decisions.life.out(event);
         }
         return event;
     }
     public String modParser(String event){//take first attribute as toMod, set = to tokenized string using javascript
-        Decisions.life.out("\nMod: " + event);
+
         if (event.length() > 0 && event.charAt(0) == '['){
             String mod;
             int toMod = -1;
-            Decisions.life.out(mod = event.substring(1, event.indexOf(']')).toLowerCase());
+            mod = event.substring(1, event.indexOf(']')).toLowerCase();
             event = (event.substring(event.indexOf(']') + 1));
             for  (int i = 0; i < Decisions.life.characters.get(0).getAttributes().getAttributes().size(); i++) {
                 if (mod.contains(Decisions.life.characters.get(0).getAttributes().getAttributes().get(i).getName()))
-                    toMod = Decisions.life.characters.get(0).getAttributes().getAttributes().get(i).getValue();
+                    toMod = i;
                 mod = mod.replaceAll(Decisions.life.characters.get(0).getAttributes().getAttributes().get(i).getName(), "" + Decisions.life.characters.get(0).getAttributes().getAttributes().get(i).getValue());
             }
             if (toMod != -1){
@@ -140,11 +146,10 @@ public class Event {
         return event;
     }
     public Boolean conditionalParser(String event){
-        Decisions.life.out("\nCon: " + event + "ksjk");
         if (event.length() > 0 && event.charAt(0) == '('){
             String check;
             int toCheck = -1;
-            Decisions.life.out(check = event.substring(1, event.indexOf(')')).toLowerCase());
+            check = event.substring(1, event.indexOf(')')).toLowerCase();
             event = (event.substring(event.indexOf(')') + 1));
             for  (int i = 0; i < Decisions.life.characters.get(0).getAttributes().getAttributes().size(); i++) {
                 if (check.contains(Decisions.life.characters.get(0).getAttributes().getAttributes().get(i).getName()))
@@ -153,7 +158,7 @@ public class Event {
             }
             if (toCheck != -1){
                 String[] ints = check.split("\\s+");
-                if (Integer.parseInt(ints[1]) < Integer.parseInt(ints[0]) && Integer.parseInt(ints[0]) < Integer.parseInt(ints[2]))
+                if (Integer.parseInt(ints[1]) <= Integer.parseInt(ints[0]) && Integer.parseInt(ints[0]) <= Integer.parseInt(ints[2]))
                     return true;
                 return false;
             }else
