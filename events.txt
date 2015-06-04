@@ -88,7 +88,7 @@
 {robbery}"The robbery begins, hopefully nothing goes wrong..."<random>
 	"You get caught."jail
 	"You succeed"[money+3]highSchool
-{collegeApply}"Highschool draws to a close."<force 0><force 1><force 2>
+{collegeApply}"Highschool draws to a close."<force 0><force 1>
 	(intelligence 12 30)"You get into a decent college."college
 	"You don't get into college."adulthood
 
