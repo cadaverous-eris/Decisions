@@ -102,7 +102,6 @@
 	
 {college}"You are at college."
 	"Go to your classes."[intelligence+1]college2
-	"Skip class."skipCollege
 
 {college2}"You have some free time."
 	"Party!"collegeParty
@@ -116,7 +115,7 @@
 
 {college3}""<force 1>
 	(intelligence 20 4000000)"You graduate college!"adulthood
-	"Continue learning so you can graduate."college1
+	"Continue learning so you can graduate."college
 	"Screw the work, you drop out."adulthood
 
 {tryLoveCollege}""<random>
