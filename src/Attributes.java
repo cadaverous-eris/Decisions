@@ -18,7 +18,6 @@ public class Attributes {
             String[] tokens = name.toLowerCase().split("\\s+");
             this.name = tokens[0];
             value = (new Random()).nextInt(Integer.parseInt(tokens[2])) + Integer.parseInt(tokens[1]);
-            System.out.print(name + " " + value + "\n");
         }
         public String getName() {
             return name;

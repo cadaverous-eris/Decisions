@@ -56,7 +56,8 @@ public class Life{
             if (o.contains("{}")) {
                 Event misc = new Event("{" + (miscEvents += 1) + "}" + o.substring(o.indexOf('}') + 1));
                 for (int i = 0; i < options.size(); i++)
-                    options.get(i).setPointer(misc);
+                   if (options.get(i).getPointer() == null)
+                        options.get(i).setPointer(misc);
                 addOptions(file, misc.getOptions());
                 events.add(misc);
                 return o;
@@ -86,6 +87,11 @@ public class Life{
         }
         do{
             choice = (new Scanner(System.in)).nextInt() - 1;
+            if (choice == 100) {
+                for (Attributes.Attribute a : characters.get(0).getAttributes().getAttributes())
+                    System.out.print(a.getName() + ": " + a.getValue() + "\n");
+                choice = -1;
+            }
         }while (choice == -1);
         return choice;
     }
@@ -95,52 +101,10 @@ public class Life{
      ----------------------*/
 
     public void start(){
-        load("{robbery}");
-        System.out.println(events.size());
+
+        load("{birth}");
         events.get(0).execute();
         out("\nYou die, sad, and alone.");
 
     }
-/*
-    private void birth(){
-        characters.add(new Character());
-        if (characters.get(0).getLuck() > 0){
-            out("\nYou are born, it is a rather unremarkable affair, and you, are a rather unremarkable baby.\n");
-            childhood();
-        }
-        out("\nYou are still born");
-        death();
-        //TODO: siamese twin
-    }
-    private void childhood(){
-        out("As you grow up, your life remains relatively dull.\n\n");
-        out("In middle school you wake up every morning and eat:\n\n");
-        switch(decide(("Cereal\n,Eggs and Bacon\n,Oatmeal\n").split(", ?"))){
-            case 0:
-                characters.get(0).setWeight(characters.get(0).getWeight() + 20);
-                break;
-            case 1:
-                characters.get(0).setWeight(characters.get(0).getWeight() + 5);
-                characters.get(0).setEndurance(characters.get(0).getEndurance() + 1);
-                break;
-            default:
-                break;
-        }
-        out("Then you always:\n\n");
-        switch(decide(("Just go to school\n,Cut and go hang out\n").split(", ?"))){
-            case 0:
-                characters.get(0).setWeight(characters.get(0).getWeight() + 20);
-                break;
-            case 1:
-                characters.get(0).setWeight(characters.get(0).getWeight() + 5);
-                characters.get(0).setEndurance(characters.get(0).getEndurance() + 1);
-                break;
-            default:
-                break;
-        }
-    }
-    private void death(){
-        out("You die sad and alone.");
-    }
-
-*/}
+}

@@ -53,6 +53,8 @@ public class Event {
         String str = executable;
         if (str.length() == 0)
             return;
+        if (str.charAt(0) == '>')
+            str = str.substring(1);
         if (str.charAt(0) == '(')
             str = str.substring(str.lastIndexOf(')') + 1);
         while((str = modParser(outParser(priorityParser(str)))).length() > 0) ;
@@ -65,6 +67,9 @@ public class Event {
         if (event.getOptions().size() == 0)
             return null;
         int i = 0;
+        ArrayList<String> restore = new ArrayList<String>();
+        for (Option o: event.getOptions())
+            restore.add(o.getExecutable());
         for (Option o: event.getOptions()) {
             if (o.getExecutable().length() > 0 && o.getExecutable().charAt(0) == '>') {
                 i++;
@@ -84,10 +89,10 @@ public class Event {
         }
         String[] decisions = new String[options.size()];
         decisions = options.toArray(decisions);
-        //Decisions.life.out("\nIndex: " + Decisions.life.decide(decisions));
-
         Option o = event.getOptions().get(Decisions.life.decide(decisions) + i);
         o.getEvent().execute();
+        for (int j = 0; j < event.getOptions().size(); j++)
+            event.getOptions().get(j).setExecutable(restore.get(j));
         return o.getPointer();
     }
 
@@ -97,17 +102,14 @@ public class Event {
             int f = 0;
             if (event.toLowerCase().charAt(1)=='f')
                 f = Integer.parseInt(event.substring(event.indexOf(' ') + 1, event.indexOf('>')));
-            if (event.toLowerCase().charAt(1)=='r'){
+            if (event.toLowerCase().charAt(1)=='r')
                 f = new Random().nextInt(options.size());
-                Decisions.life.out("Event" + event);
-            }
-            while(options.get(f).getExecutable().charAt(0) == '>'){
+            while(options.get(i).getExecutable().charAt(0) == '>')
                 i++;
-                Decisions.life.out("Options: " + options.get(i));
-            }
-            options.get(f).setExecutable(">" + options.get(f).getExecutable());
-            if (f < getOptions().size())
+            if (f < getOptions().size()) {
+                options.get(f).setExecutable(">" + options.get(f).getExecutable());
                 options.add(i, options.remove(f));
+            }
             event = (event.substring(event.indexOf('>') + 1));
         }
         return event;
@@ -116,8 +118,6 @@ public class Event {
         if (event.length() > 0 && event.charAt(0) == '"' && event.indexOf('"', 1) != -1) {
             Decisions.life.out(event.substring(1, event.indexOf('"', 1)));
             event = (event.substring(event.indexOf('"', 1) + 1));
-        }else{
-            Decisions.life.out(event);
         }
         return event;
     }

@@ -13,7 +13,6 @@
 	"Eggs and bacon, for the fat, protein, and vitamins."[weight+5][endurance+5]
 	"Cereal, for the carbohydrates, vitamins, and minerals."[weight+20][endurance+1]
 	"Yogurt, for the protein, vitamins, calcium, and fat."[weight+30][endurance+2]
-
 {}"Elementary and middle school pass without incident. They don't matter anyway."
 	highSchool
 
@@ -35,15 +34,14 @@
 	"play sports."[endurance+5]highSchool2
 
 {summer}"You made it through the school year; it's finally summer!"<force 0>
-	(grade 3 3)applyCollege
+	(grade 3 3)collegeApply
 	"Hang out with friends"[charisma+1]
 	"Study"[intelligence+1]
 	"Sports"[endurance+5]
-	"Videogames"[weight+1][perception+1]
+	"Video games"[weight+1][perception+1]
 {}"summer draws to a close..."<force 0>
-	(intelligence 6 20)[grade+1]highSchool
+	(intelligence 6 10000)[grade+1]highSchool
 	"You didn't work hard enough, have to repeat last school year."highSchool
-
 {party}"You go to a party, unsure of what to expect."<random>
 	"You dance the night away."[endurance+1]
 	"You talk to friends."[charisma+1]
@@ -62,7 +60,6 @@
 	"You get some dank weed."[money-1][weight+10][cancerrisk+2][perception-2]weedHighSchool
 	"You get caught by the police."jail
 	"As you enter the worse side of town to find a dealer, you get shot. The shooter leaves before you see them, and you are left alone."death
-
 {weedHighSchool}"You decide to smoke that kush."<random>
 	"You get high, and nothing much happens."summer
 	"You get high, and reflect deeply on your life."[intelligence+1]summer
