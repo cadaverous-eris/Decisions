@@ -152,7 +152,7 @@
 {adulthood}"Adult life is boring."[money-2*kids+relationship][money+income]"You have free time from your job."<force 0><force 1>
 	(money -10000 -10)"You are broke, and become homeless."homeless
 	(cancerrisk 7 20000)"You start feeling sick, so you go to the doctor's office. Turns out you have cancer."[cancerrisk-cancerrisk]cancer
-	"Look for a new job."applyJob
+	"Look for a new job."jobApply
 	(relationship 0 0)"Look for a significant other."tryLove
 	(relationship 1 1)"Propose to your significant other."[money-3]propose
 	(relationship 1 1)"Go out with your significant other."[money-1]date
