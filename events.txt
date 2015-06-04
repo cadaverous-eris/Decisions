@@ -40,7 +40,7 @@
 	"Sports"[endurance+5]
 	"Video games"[weight+1][perception+1]
 {}"summer draws to a close..."<force 0>
-	(intelligence 6 10000)[grade+1]highSchool
+	(intelligence 5 10000)[grade+1]highSchool
 	"You didn't work hard enough, have to repeat last school year."highSchool
 {party}"You go to a party, unsure of what to expect."<random>
 	"You dance the night away."[endurance+1]
@@ -88,14 +88,14 @@
 	"You get caught."jail
 	"You succeed"[money+3]highSchool
 {collegeApply}"Highschool draws to a close."<force 0><force 1>
-	(intelligence 12 30)"You get into a decent college."college
+	(intelligence 8 30)"You get into a decent college."college
 	"You don't get into college."adulthood
 
 {jobApply}"You need to make money somehow..."
-	(intelligence 15 20 || charisma 15 20 || luck 20 30 || beauty 30 40)"Get a high paying, yet monotonous job."[income-income][income+10]
+	(intelligence 15 20000 || charisma 15 20000 || luck 20 30000 || beauty 30 40000)"Get a high paying, yet monotonous job."[income-income][income+10]
 	(intelligence 10 14 || charisma 10 14 || beauty 20 29)"Get an average desk job. It will be boring, but it will pay the bills."[income-income][income+5]
 	"Get a crap job doing peoples' dirty work and you'll get paid jack crap."[income-income][income+1]
-	(endurance 20 30)"You get a job as an athlete"[income-income][income+15]
+	(endurance 20 300000)"You get a job as an athlete"[income-income][income+15]
 	"Join the Army."army
 {}""
 	adulthood
@@ -115,7 +115,7 @@
 	"Talk to your science professor."innerSpace
 
 {college3}""<force 1>
-	(intelligence 20 40)"You graduate college!"adulthood
+	(intelligence 20 4000000)"You graduate college!"adulthood
 	"Continue learning so you can graduate."college1
 	"Screw the work, you drop out."adulthood
 
@@ -151,8 +151,8 @@
 	"Your date is average."college3
 
 {adulthood}"Adult life is boring."[money-2*kids+relationship][money+income]"You have free time from your job."<force 0><force 1>
-	(money -100 0)"You are broke, and become homeless."homeless
-	(cancerrisk 7 20)"You start feeling sick, so you go to the doctor's office. Turns out you have cancer."[cancerrisk-cancerrisk]cancer
+	(money -10000 -10)"You are broke, and become homeless."homeless
+	(cancerrisk 7 20000)"You start feeling sick, so you go to the doctor's office. Turns out you have cancer."[cancerrisk-cancerrisk]cancer
 	"Look for a new job."applyJob
 	(relationship 0 0)"Look for a significant other."tryLove
 	(relationship 1 1)"Propose to your significant other."[money-3]propose
@@ -172,7 +172,7 @@
 	
 {tryLove}""<force 1><random>
 	"You go to a bar to find someone to settle down with."bar
-	(perception 15 30)"You see the most beautiful person you've ever seen on the way to a singles gathering."loveFirstSight
+	(perception 15 300000)"You see the most beautiful person you've ever seen on the way to a singles gathering."loveFirstSight
 	"You are checking your various accounts for eHarmony and Christian Mingle as you walk to the store, and get so distracted that you fall into a manhole and die."death
 	
 {bar}"You find a decent bar, and take a seat next to someone you are attracted to."<random>
@@ -187,7 +187,7 @@
 
 {compliment}"The person hears your compliment and responds:"<force 0><force 1><random>
 	(beauty 0 3)"'Oh. I didn't know rats could speak. Now leave my sight before I call the exterminator.'"rejection
-	(beauty 10 20)"'Why thank you, would you like to go back to my place?'"[relationship+1]sex
+	(beauty 10 200000)"'Why thank you, would you like to go back to my place?'"[relationship+1]sex
 	"'Thanks, what's your name?'"date
 	"'Bye babe!' They were on the phone and didn't hear you."adulthood
 
@@ -355,7 +355,7 @@
 	(relationship 0 0)"You see a beautiful person at the Chipotle, and compliment them."compliment
 
 {alcohol}"You get drink some beer, gin, and scotch."<force 0><force 1>
-	(endurance 15 30 || weight 300 1000)"You get a bit tipsy, but it wears off quickly. You go home."adulthood
+	(endurance 15 3000 || weight 300 1000)"You get a bit tipsy, but it wears off quickly. You go home."adulthood
 	(endurance 10 14 || weight 250 299)"You get drunk."drunk
 	(endurance 6 9 || weight 175 249)"You get drunk, and someone takes you to the hospital."hospital
 	"You die of alcohol poisoning after passing out in a public restroom."death
@@ -476,7 +476,7 @@
 	"The mortitian sees you are alive, and apoligizes profusely for the misunderstanding, and suddenly stabs you in the face, muttering something about how they have to do everything theirself."death
 
 {fakeZombie}"The mortitian seems completely convinced that you are undead."<force 0>
-	(intelligence 0 7)"The mortitian is a professional. If they think you're a zombie, you must be a zombie."fakeZombieOutbreak
+	(intelligence -10000 8)"The mortitian is a professional. If they think you're a zombie, you must be a zombie."fakeZombieOutbreak
 	"Knowing that the only way to stop the zombie apocalypse is to kill you, the mortitian slices your head open with a bonesaw and runs away, screaming."death
 
 {fakeZombieOutbreak}"If you are a zombie, you should probably start increasing your numbers. You go out and start biting everyone in sight."<random>
@@ -496,7 +496,7 @@
 	"This is no ordinary hospital. This is an old hospital, secretly converted into an illegal drug testing center, where some fake paramedics brought you. You have no choice but to live the rest of your life as a lab rat..."falseMorgue
 
 {attackNurse}"You take a swing at the nurse."<random>
-	(endurance 15 30)"You knock the nurse out, remove the IVs from your arm, and make a run for it."hospitalEscape
+	(endurance 15 30000)"You knock the nurse out, remove the IVs from your arm, and make a run for it."hospitalEscape
 	"You are too weak to do any harm, but the nurse isn't. Startled by your attack, the nurse takes a swing at you with whatever happened to be in their hand, which in this case is a scalpel. The nurse panics, and runs away, leaving you to bleed out alone."death
 
 {innerSpace}"Your professor has been doing research into miniturization."

@@ -6,10 +6,10 @@ endurance 0 10
 luck 0 10
 perception 0 10
 intelligence 0 10
-money 0 1
-grade 0 1
-relationship 0 1
-kids 0 1
-income 0 1
+money 0 0
+grade 0 0
+relationship 0 0
+kids 0 0
+income 0 0
 sexualorientation 0 4
 cancerrisk 1 3
