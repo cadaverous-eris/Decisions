@@ -94,6 +94,7 @@ public class Life{
                 choice = -1;
             }
         }while (choice == -1);
+        out("\n\n");
         return choice;
     }
 

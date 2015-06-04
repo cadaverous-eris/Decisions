@@ -66,6 +66,9 @@ public class Event {
     public Event optionParser(Event event){
         if (event.getOptions().size() == 0)
             return null;
+        for (int j = 0; j < event.getOptions().size(); j++)
+            if (event.getOptions().get(j).getExecutable().charAt(0) == '(')
+                event.getOptions().add(0, event.getOptions().remove(j));
         int i = 0;
         int c = 0;
         ArrayList<String> restore = new ArrayList<String>();
