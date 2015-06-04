@@ -63,10 +63,11 @@ public class Life{
                 return o;
             } else if (o.contains("{"))
                 return o; //return first line which is not an option
-            if (o.length() > 0)
+            if (o.length() > 0 && !o.equals("")) {
                 if (!o.contains("\""))
                     o = o.substring(0, o.indexOf(')') + 1) + "\"\"" + o;
                 options.add(new Option(o));
+            }
         }
         return null;
     }
@@ -103,6 +104,15 @@ public class Life{
     public void start(){
 
         load("{birth}");
+        int i = 0;
+        for (Event e: events)
+            for (Option o: e.getOptions())
+                if (o.getPointer() == null) {
+                    if (!o.getPointerID().equals("death"))
+                        out("\n" + o.getPointerID());
+                    i++;
+                }
+        out("" + events.size());
         events.get(0).execute();
         out("\nYou die, sad, and alone.");
 

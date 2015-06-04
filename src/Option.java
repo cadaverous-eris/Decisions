@@ -4,7 +4,7 @@
 public class Option{
     Event event;
     Event pointer;
-
+    String pointerID;
     public void setPointer(Event pointer) {
         this.pointer = pointer;
     }
@@ -16,10 +16,14 @@ public class Option{
     public Option(String executable) {
         String nextID = executable.substring(Math.max(Math.max(Math.max(executable.lastIndexOf(']') + 1, executable.lastIndexOf('>') + 1), executable.lastIndexOf('"') + 1), executable.lastIndexOf(')') + 1));
         executable = executable + "#ID#";
+        pointerID = nextID;
         event = new Event(executable.replace(nextID + "#ID#", ""));
         if (nextID.length() > 0) {
             pointer = Decisions.life.load("{" + nextID + "}");
         }
+    }
+    public String getPointerID() {
+        return pointerID;
     }
     public Event getEvent(){
         return event;
