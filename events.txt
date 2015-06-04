@@ -118,6 +118,32 @@
 	"Continue learning so you can graduate."college
 	"Screw the work, you drop out."adulthood
 
+{buyDrugsCollege}"You try find a drug dealer"<random>
+	"You get some dank weed."[money-1][weight+10][cancerrisk+2][perception-2]weedCollege
+	"You get caught by the police."jail
+	"As you enter the worse side of town to find a dealer, you get shot. The shooter leaves before you see them, and you are left alone."death
+
+{weedCollege}"You smoke some weed."<random>
+	"You get high out of your mind, and go for a walk. While you are walking, you see something shiny in the river and decide to investigate. You drown."death
+	"AWWWW YISSS!"college3
+
+{collegeParty}"You go to a party."
+	"Get a drink."drinkCollegeParty
+	"Dance."collegeParty2
+	"Turn up."weedCollege
+
+{collegeParty2}"The party continues..."
+	"Leave."college3
+	"Talk to people."[charisma + 1]collegeParty3
+
+{collegeParty3}"The party ends."<random>
+	"You leave with someone you've been talking to, and go back to their dorm..."sexCollege
+	college3
+
+{drinkCollegeParty}"You get drunk."
+	"You try driving somewhere, and end up hitting a school bus, killing around 20 kids. You feel so bad about it, you commit suicide."death
+	"AWWW YISS!"collegeParty2
+
 {tryLoveCollege}""<random>
 	"You find a nice person decide to go on a date with them."[relationship+1]dateCollege
 	"You get laid."sexCollege
@@ -217,7 +243,7 @@
 	"You have fun, but your date doesn't. They leave in a hurry and don't respond to your texts."rejection
 	"You have fun, and decide to go out on another date."[relationship+1]adulthood
 
-{sportdate}"You get to the game and find seats."<random>
+{sportDate}"You get to the game and find seats."<random>
 	"Your date never shows up."rejection
 	"You are having fun, until a ball flies into your face, killing you, and giving the opposing team their winning run."death
 	"Your date shows up, wearing the hat and shirt of the opposing team. They see who you are rooting for, and tell you this isn't going to work."rejection
@@ -331,9 +357,9 @@
 
 {dateSpouse}"You and your spouse go to a fancy restaurant, and try to recapture the passion you felt before you got married."<random>
 	"You and your spouse give up on the past, and decide to have sex again, for the first time in months."sex
-	"Your spouse realizes they don't love you anymore, and ask for a divorse."[relationship-2]divorse2
+	"Your spouse realizes they don't love you anymore, and ask for a divorse."[relationship-2]divorce2
 
-{divorce2}"You didn't see it coming, but here it is. No matter how much you plead, your spouse is adamant. You are getting divorsed."
+{divorce2}"You didn't see it coming, but here it is. No matter how much you plead, your spouse is adamant. You are getting divorced."
 	"You get divorced, and get really depressed. You end up losing your job for crying too much on the job, but eventually you move on."[income-income]adulthood
 	
 {shop}"You go to the mall, and try to decide which store to go to."
