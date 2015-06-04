@@ -15,7 +15,8 @@ public class Option{
 
     public Option(String executable) {
         String nextID = executable.substring(Math.max(Math.max(Math.max(executable.lastIndexOf(']') + 1, executable.lastIndexOf('>') + 1), executable.lastIndexOf('"') + 1), executable.lastIndexOf(')') + 1));
-        event = new Event(executable.replace(nextID, ""));
+        executable = executable + "#ID#";
+        event = new Event(executable.replace(nextID + "#ID#", ""));
         if (nextID.length() > 0) {
             pointer = Decisions.life.load("{" + nextID + "}");
         }

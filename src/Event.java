@@ -67,6 +67,7 @@ public class Event {
         if (event.getOptions().size() == 0)
             return null;
         int i = 0;
+        int c = 0;
         ArrayList<String> restore = new ArrayList<String>();
         for (Option o: event.getOptions())
             restore.add(o.getExecutable());
@@ -75,6 +76,8 @@ public class Event {
                 i++;
                 o.setExecutable(o.getExecutable().substring(1));
                 if (conditionalParser(o.getExecutable())) {
+                    String[] force = {""};
+                    Decisions.life.decide(force);
                     (o.getEvent()).execute();
                     return o.getPointer();
                 }
@@ -85,11 +88,13 @@ public class Event {
             if (event.getOptions().get(j).getExecutable().length() > 0 && conditionalParser(event.getOptions().get(j).getExecutable())) {
                 options.add(event.getOptions().get(j).getExecutable().substring(event.getOptions().get(j).getExecutable().indexOf('"') + 1, event.getOptions().get(j).getExecutable().lastIndexOf('"')));
                 event.getOptions().get(j).setExecutable(event.getOptions().get(j).getExecutable().replace(options.get(options.size() - 1), ""));
+            }else if (event.getOptions().get(j).getExecutable().length() > 0){
+                c++;
             }
         }
         String[] decisions = new String[options.size()];
         decisions = options.toArray(decisions);
-        Option o = event.getOptions().get(Decisions.life.decide(decisions) + i);
+        Option o = event.getOptions().get(Decisions.life.decide(decisions) + i + c);
         o.getEvent().execute();
         for (int j = 0; j < event.getOptions().size(); j++)
             event.getOptions().get(j).setExecutable(restore.get(j));

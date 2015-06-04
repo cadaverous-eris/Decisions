@@ -64,7 +64,6 @@
 	"You get high, and nothing much happens."summer
 	"You get high, and reflect deeply on your life."[intelligence+1]summer
 	"You get high, and love it. You want something better, so you try cocaine. One thing leads to another, and you become a crackwhore."[cancerrisk+1][weight-20]crackwhore
-
 {crackwhore}"You've resorted to prostitution in order to get crack."<random>
 	""
 	"The crack causes heart problems, and you have a heart attack, causing you to die in a dark backstreet."death
